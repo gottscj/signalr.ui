@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.HubApi", "SignalR.HubApi\SignalR.HubApi.csproj", "{FB38EBEB-0AC6-4266-9AB4-28F527701E64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.HubApi.Sample", "SignalR.HubApi.Sample\SignalR.HubApi.Sample.csproj", "{CBAE127F-EC3A-4A21-AFAB-3F18EF0657E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB38EBEB-0AC6-4266-9AB4-28F527701E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB38EBEB-0AC6-4266-9AB4-28F527701E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB38EBEB-0AC6-4266-9AB4-28F527701E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB38EBEB-0AC6-4266-9AB4-28F527701E64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBAE127F-EC3A-4A21-AFAB-3F18EF0657E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBAE127F-EC3A-4A21-AFAB-3F18EF0657E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBAE127F-EC3A-4A21-AFAB-3F18EF0657E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBAE127F-EC3A-4A21-AFAB-3F18EF0657E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
