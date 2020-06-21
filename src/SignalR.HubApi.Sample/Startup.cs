@@ -19,7 +19,7 @@ namespace SignalR.HubApi.Sample
                 {
                     Title = "Chat"
                 };
-                doc.AddHub<ChatHub>("/chat");
+                doc.AddHubDocumentation<ChatHub>("/chat");
             });
         }
 

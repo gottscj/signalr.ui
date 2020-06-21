@@ -17,7 +17,7 @@ namespace SignalR.HubApi
 
         private readonly List<HubModel> _hubs = new List<HubModel>();
         
-        public void AddHub<THub>(string path) where THub : Hub
+        public void AddHubDocumentation<THub>(string path) where THub : Hub
         {
             var description = typeof(THub).GetXmlDocsSummary();
             var hubModel = new HubModel
