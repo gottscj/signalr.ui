@@ -17,9 +17,30 @@ namespace SignalR.HubApi.Sample
             {
                 doc.ApiInfo = new HubApiInfo
                 {
-                    Title = "Chat"
+                    Title = "Chat",
+                    Description = "Sample chap api",
+                    Version = "v1.0",
+                    Contact = new HubApiContact
+                    {
+                        Name = "The Dude Li Du",
+                        Email = "dude@lidu.com",
+                        Url = "xxx.dudelidu.xxx"
+                    }
                 };
                 doc.AddHubDocumentation<ChatHub>("/chat");
+            });
+
+            // For dev purposes only
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    });
             });
         }
 
@@ -30,6 +51,9 @@ namespace SignalR.HubApi.Sample
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            // For dev purposes only
+            app.UseCors("AllowAll");
 
             app.UseHubApi();
             app.UseRouting();

@@ -1,0 +1,85 @@
+// color palettes generated using http://mcg.mbitson.com/
+
+$font-family: monospace;
+
+$light-text: white;
+
+$error-color: red;
+$success-color: #00c979;
+
+$primary-color: (
+    30:  #fafafa,
+    50:  #eaeaea,
+    100: #cbcbcb,
+    200: #a8a8a8,
+    300: #858585,
+    400: #6b6b6b,
+    500: #515151,
+    600: #4a4a4a,
+    700: #404040,
+    800: #373737,
+    900: #272727,
+);
+
+$secondary-color: (
+    30:   #f3fdff,
+    50:   #e0f1f5,
+    100:  #b3dde6,
+    200:  #80c6d6,
+    300:  #4dafc5,
+    400:  #269eb8,
+    500:  #008dac,
+    600:  #0085a5,
+    700:  #007a9b,
+    800:  #007092,
+    900:  #005d82,
+    A100: #afe4ff,
+    A200: #7cd3ff,
+    A400: #49c2ff,
+    A700: #30b9ff,
+);
+
+$accent-color: (
+    30:   #e9fff7,
+    50:   #e0f9ef,
+    100:  #b3efd7,
+    200:  #80e4bc,
+    300:  #4dd9a1,
+    400:  #26d18d,
+    500:  #00c979,
+    600:  #00c371,
+    700:  #00bc66,
+    800:  #00b55c,
+    900:  #00a949,
+    A100: #d3ffe3,
+    A200: #a0ffc2,
+    A400: #6dffa2,
+    A700: #53ff91,
+);
+
+// bootstrap
+$theme-colors: (
+  'primary': map-get($primary-color, 500),
+);
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap-vue/src/index.scss';
+
+// scroll-bar
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(44, 44, 44, 0.1); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(255,255,255,0.5); 
+}

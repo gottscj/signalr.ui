@@ -13,4 +13,8 @@
       <PackageReference Include="System.Interactive.Async" Version="4.1.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <EmbeddedResource Include="web\**\*" />
+    </ItemGroup>
+
 </Project>

@@ -1,0 +1,10 @@
+{
+  "servers": [
+    {
+      "name": "Chat API",
+      "url": "https://localhost:5001",
+      "ws": "ws://localhost:54624",
+      "docs": "hubapi/chat/api.json"
+    }
+  ]
+}
