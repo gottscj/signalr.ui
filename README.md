@@ -27,6 +27,14 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
+The description of the hub methods are extracted from the XML docs. In order for this functionality to work, the documentation
+file has to be generated. Add this to your project file:
+```xml
+<PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+</PropertyGroup>
+```
+
 ## Development notes
 The UI is under development
 

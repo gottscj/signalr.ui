@@ -7,7 +7,9 @@ namespace SignalR.HubApi.Sample
 {
     public class ChatHub : Hub<IChatClient>
     {
-
+        /// <summary>
+        /// Sends a message to the chat
+        /// </summary>
         public Task Send(string message)
         {
             if (message == string.Empty)
@@ -18,6 +20,9 @@ namespace SignalR.HubApi.Sample
             return Clients.All.Send(message);
         }
 
+        /// <summary>
+        /// Adds a person to the chat
+        /// </summary>
         public Task AddPerson(Person person)
         {
             return Task.CompletedTask;
