@@ -2,7 +2,7 @@
   <div id="SignalRUi">
     <BNavbar class="navBar">
       <BNavbarBrand class="navBarTitle">
-        <!-- <img class="logo" src="./assets/logo.svg" alt="JsonRpcNet" /> -->
+        <img class="logo" src="./assets/logo.png" alt="SignalR.UI" />
         SignalR.UI
       </BNavbarBrand>
 

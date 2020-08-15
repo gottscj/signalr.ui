@@ -59,7 +59,7 @@
           id="docs-input"
           v-model="$v.form.docs.$model"
           v-bind:state="$v.form.docs.$dirty ? !$v.form.docs.$error : null"
-          placeholder="jsonrpc/jsonRpcApi.json"
+          placeholder="hubapi/chat/api.json"
         ></BFormInput>
       </BFormGroup>
 
