@@ -1,5 +1,5 @@
 <template>
-  <div id="JsonRpcDocs">
+  <div id="SignalRUi">
     <BNavbar class="navBar">
       <BNavbarBrand class="navBarTitle">
         <!-- <img class="logo" src="./assets/logo.svg" alt="JsonRpcNet" /> -->
@@ -121,7 +121,7 @@ import AddServerFormDialog from "./components/AddServerFormDialog";
 import { Validator } from "jsonschema";
 
 export default {
-  name: "JsonRpcDocs",
+  name: "SignalRUi",
   components: {
     AddServerFormDialog,
     ApiInfo,
@@ -367,7 +367,7 @@ export default {
 </script>
 
 <style lang="scss">
-#JsonRpcDocs {
+#SignalRUi {
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
