@@ -224,11 +224,11 @@ export default {
       const docUrl = `${this.selectedServerInfo.url}/${this.selectedServerInfo.docs}`;
       try {
         const apiDoc = await this.getJson(docUrl);
-        const serviceSchema = await this.getJson("./serviceSchema.json");
+        const hubApiSchema = await this.getJson("./hubApiSchema.json");
         let jsonSchemaValidator = new Validator();
         let validationResult = jsonSchemaValidator.validate(
           apiDoc,
-          serviceSchema
+          hubApiSchema
         );
         if (validationResult.errors.length > 0) {
           throw new Error(validationResult.toString());
