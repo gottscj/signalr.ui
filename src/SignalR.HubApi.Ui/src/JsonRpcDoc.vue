@@ -2,7 +2,8 @@
   <div id="JsonRpcDocs">
     <BNavbar class="navBar">
       <BNavbarBrand class="navBarTitle">
-        <img class="logo" src="./assets/logo.svg" alt="JsonRpcNet" />
+        <!-- <img class="logo" src="./assets/logo.svg" alt="JsonRpcNet" /> -->
+        SignalR.UI
       </BNavbarBrand>
 
       <!-- search box is disabled, because the functionality isn't implemented yet -->

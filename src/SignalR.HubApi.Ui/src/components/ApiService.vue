@@ -38,14 +38,14 @@
         </div>
       </div>
 
-      <!-- <div v-if="service.notifications.length > 0" class="service-group">
+      <div v-if="service.clientMethods.length > 0" class="service-group">
         <div class="service-group-title">
           <BFormCheckbox switch v-model="enableAllNotifications" size="lg">
-            Notifications
+            Client Methods
           </BFormCheckbox>
         </div>
         <div
-          v-for="(notification, index) in service.notifications"
+          v-for="(notification, index) in service.clientMethods"
           v-bind:key="notification.name"
         >
           <ApiNotification
@@ -57,14 +57,14 @@
             v-model="notificationsState[index]"
           />
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ApiMethod from "./ApiMethod.vue";
-// import ApiNotification from "./ApiNotification.vue";
+import ApiNotification from "./ApiNotification.vue";
 import { BBadge, BFormCheckbox } from "bootstrap-vue";
 import {
   JsonRpcWebsocket,
@@ -80,7 +80,7 @@ export default {
   name: "ApiService",
   components: {
     ApiMethod,
-    // ApiNotification,
+    ApiNotification,
     BBadge,
     BFormCheckbox
   },
@@ -97,16 +97,16 @@ export default {
     };
   },
   watch: {
-    // enableAllNotifications: function() {
-    //   if (this.allNotificationsEnabled != this.enableAllNotifications) {
-    //     this.notificationsState = Array(this.service.notifications.length).fill(
-    //       this.enableAllNotifications
-    //     );
-    //   }
-    // },
-    // allNotificationsEnabled: function() {
-    //   this.enableAllNotifications = this.allNotificationsEnabled;
-    // },
+    enableAllNotifications: function() {
+      if (this.allNotificationsEnabled != this.enableAllNotifications) {
+        this.notificationsState = Array(this.service.clientMethods.length).fill(
+          this.enableAllNotifications
+        );
+      }
+    },
+    allNotificationsEnabled: function() {
+      this.enableAllNotifications = this.allNotificationsEnabled;
+    },
     connectService: function() {
       if (
         (this.connectService === true &&
@@ -128,13 +128,13 @@ export default {
       path: String,
       description: String,
       methods: [],
-      // notifications: []
+      clientMethods: []
     }
   },
   created() {
-    // this.notificationsState = Array(this.service.notifications.length).fill(
-    //   this.enableAllNotifications
-    // );
+    this.notificationsState = Array(this.service.clientMethods.length).fill(
+      this.enableAllNotifications
+    );
   },
   methods: {
     toggleAccordion() {
@@ -198,9 +198,9 @@ export default {
     wsPath: function() {
       return this.serverInfo.ws + this.service.path;
     },
-    // allNotificationsEnabled: function() {
-    //   return this.notificationsState.every(x => x === true);
-    // }
+    allNotificationsEnabled: function() {
+      return this.notificationsState.every(x => x === true);
+    }
   }
 };
 </script>

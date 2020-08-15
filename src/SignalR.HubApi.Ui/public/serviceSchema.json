@@ -84,10 +84,10 @@
             "$ref": "#/definitions/method"
           }
         },
-        "notifications": {
+        "clientMethods": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/notification"
+            "$ref": "#/definitions/clientMethod"
           }
         }
       }
@@ -176,7 +176,7 @@
         }
       }
     },
-    "notification": {
+    "clientMethod": {
       "type": "object",
       "properties": {
         "name": {
