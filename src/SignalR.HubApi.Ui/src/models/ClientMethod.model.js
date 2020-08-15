@@ -1,12 +1,12 @@
-export class Notification {
+export class ClientMethod {
   title;
   content;
   timestamp;
-  serviceName;
+  hubName;
   color;
-  constructor(color, serviceName, title, content) {
+  constructor(color, hubName, title, content) {
     this.color = color;
-    this.serviceName = serviceName;
+    this.hubName = hubName;
     this.title = title;
     this.content = content;
     this.timestamp = new Date();

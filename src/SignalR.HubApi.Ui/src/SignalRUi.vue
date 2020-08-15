@@ -52,7 +52,7 @@
     <div v-if="apiInfo !== void 0">
       <div
         class="split left"
-        v-bind:style="{ width: showNotifications ? '80%' : '100%' }"
+        v-bind:style="{ width: showClientMethods ? '80%' : '100%' }"
       >
         <div class="apiInfo">
           <ApiInfo v-bind:info="apiInfo.info" />
@@ -64,22 +64,22 @@
             />
           </div>
         </div>
-        <NotificationPanelButton
-          class="notifications-button"
-          v-bind:style="{ left: showNotifications ? '80%' : '100%' }"
-          v-bind:numberOfNotifications="
-            $root.$data.notificationsService.notifications.length
+        <ClientMethodPanelButton
+          class="clientmethods-button"
+          v-bind:style="{ left: showClientMethods ? '80%' : '100%' }"
+          v-bind:numberOfClientMethods="
+            $root.$data.ClientMethodsService.clientMethods.length
           "
           v-bind:checked="false"
-          v-on:click="showNotifications = !showNotifications"
+          v-on:click="showClientMethods = !showClientMethods"
         />
       </div>
       <div
         class="split right"
-        v-bind:style="{ width: showNotifications ? '20%' : '0%' }"
+        v-bind:style="{ width: showClientMethods ? '20%' : '0%' }"
       >
-        <NotificationPanel
-          v-bind:notifications="$root.$data.notificationsService.notifications"
+        <ClientMethodsPanel
+          v-bind:clientMethods="$root.$data.ClientMethodsService.clientMethods"
         />
       </div>
     </div>
@@ -109,8 +109,8 @@ import {
   BNavbarNav,
   BNavbarBrand
 } from "bootstrap-vue";
-import NotificationPanel from "./components/NotificationPanel.vue";
-import NotificationPanelButton from "./components/NotificationPanelButton.vue";
+import ClientMethodsPanel from "./components/ClientMethodsPanel.vue";
+import ClientMethodPanelButton from "./components/ClientMethodPanelButton.vue";
 import SearchBox from "./components/SearchBox.vue";
 import { TypeDefinitionsService } from "./services/TypeDefinitions.service";
 import { ColorsService } from "./services/Colors.service";
@@ -131,8 +131,8 @@ export default {
     BNavbar,
     BNavbarBrand,
     BNavbarNav,
-    NotificationPanel,
-    NotificationPanelButton,
+    ClientMethodsPanel,
+    ClientMethodPanelButton,
     SearchBox
   },
   data: function() {
@@ -160,7 +160,7 @@ export default {
         }
       ],
       searchString: "",
-      showNotifications: false,
+      showClientMethods: false,
       showAddServerDialog: false,
       colorsService: new ColorsService()
     };
@@ -209,7 +209,7 @@ export default {
     selectServer: async function() {
       this.apiInfo = void 0;
       this.apiInfoErrorMessage = void 0;
-      this.$root.$data.notificationsService.clearAll();
+      this.$root.$data.ClientMethodsService.clearAll();
 
       if (!this.isSelfHosted) {
         // only save selected server if not self-hosted, otherwise the server is always the same
@@ -244,8 +244,8 @@ export default {
         }`;
       }
     },
-    toggleNotificationPanel() {
-      this.showNotifications = !this.showNotifications;
+    toggleClientMethodsPanel() {
+      this.showClientMethods = !this.showClientMethods;
     },
     addServer(server) {
       server.origin = "local";
@@ -415,7 +415,7 @@ export default {
     }
   }
 
-  .notifications-button {
+  .clientmethods-button {
     float: right;
     position: fixed;
     border-radius: 50%;

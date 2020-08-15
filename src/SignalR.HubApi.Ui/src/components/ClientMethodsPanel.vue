@@ -1,31 +1,31 @@
 <template>
-  <div id="NotificationPanel">
+  <div id="ClientMethodsPanel">
     <div class="panel">
-      <NotificationCard
-        v-for="(note, index) in notifications"
+      <ClientMethodCard
+        v-for="(note, index) in clientMethods"
         v-bind:key="`note-${note.timestampStr()}-${index}`"
-        v-bind:notification="note"
+        v-bind:clientMethod="note"
       />
     </div>
   </div>
 </template>
 
 <script>
-import NotificationCard from "./NotificationCard.vue";
+import ClientMethodCard from "./ClientMethodCard.vue";
 
 export default {
-  name: "NotificationPanel",
+  name: "ClientMethodsPanel",
   components: {
-    NotificationCard
+    ClientMethodCard
   },
   props: {
-    notifications: Array
+    clientMethods: Array
   }
 };
 </script>
 
 <style lang="scss" scoped>
-#NotificationPanel {
+#ClientMethodsPanel {
   .panel {
     margin-left: 4px;
     margin-right: 4px;

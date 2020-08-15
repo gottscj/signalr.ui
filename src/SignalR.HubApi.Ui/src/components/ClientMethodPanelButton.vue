@@ -1,9 +1,9 @@
 <template>
-  <div id="NotificationPanelButton">
-    <BButton class="notification-button" v-on:click="$emit('click')">
-      <img class="notification-icon" src="../assets/notification.svg" />
-      <BBadge class="notification-count" v-if="numberOfNotifications > 0">{{
-        numberOfNotifications
+  <div id="ClientMethodPanelButton">
+    <BButton class="clientmethod-button" v-on:click="$emit('click')">
+      <img class="clientmethod-icon" src="../assets/clientmethod.svg" />
+      <BBadge class="clientmethod-count" v-if="numberOfClientMethods > 0">{{
+        numberOfClientMethods
       }}</BBadge>
     </BButton>
   </div>
@@ -13,26 +13,26 @@
 import { BButton, BBadge } from "bootstrap-vue";
 
 export default {
-  name: "NotificationPanelButton",
+  name: "ClientMethodPanelButton",
   components: {
     BBadge,
     BButton
   },
   props: {
-    numberOfNotifications: Number
+    numberOfClientMethods: Number
   }
 };
 </script>
 
 <style lang="scss" scoped>
-#NotificationPanelButton {
+#ClientMethodPanelButton {
   .btn:focus,
   .btn:active {
     outline: none !important;
     box-shadow: none;
   }
 
-  .notification-button {
+  .clientmethod-button {
     float: left;
     position: relative;
     border-radius: 50px;
@@ -41,11 +41,11 @@ export default {
     margin-right: -15px;
   }
 
-  .notification-icon {
+  .clientmethod-icon {
     height: 35px;
   }
 
-  .notification-count {
+  .clientmethod-count {
     background-color: map-get($accent-color, 200);
     color: map-get($primary-color, 900);
     border-radius: 50px;

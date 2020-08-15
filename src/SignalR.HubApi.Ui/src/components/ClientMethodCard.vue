@@ -1,70 +1,70 @@
 <template>
-  <div id="NotificationCard">
-    <div class="notification-progress" v-bind:style="{ opacity: opacity }">
-      <div class="notification-card" v-on:click="toggleShowNotification">
+  <div id="ClientMethodCard">
+    <div class="clientmethod-progress" v-bind:style="{ opacity: opacity }">
+      <div class="clientmethod-card" v-on:click="toggleShowClientMethod">
         <div
-          class="notification-card-color"
-          v-bind:style="{ background: notification.color }"
+          class="clientmethod-card-color"
+          v-bind:style="{ background: clientMethod.color }"
         />
-        <div class="notification-card-service-title">
-          {{ notification.serviceName }}
-          <div class="notification-card-title">
-            {{ notification.title }}
+        <div class="clientmethod-card-service-title">
+          {{ clientMethod.hubName }}
+          <div class="clientmethod-card-title">
+            {{ clientMethod.title }}
           </div>
         </div>
-        <div class="notification-timestamp">
-          {{ notification.timestampStr() }}
+        <div class="clientmethod-timestamp">
+          {{ clientMethod.timestampStr() }}
         </div>
       </div>
       <div class="progress">
         <div class="progressbar" v-bind:style="{ width: `${progress}%` }" />
       </div>
     </div>
-    <ModalDialog v-if="showNotification" v-on:close="toggleShowNotification">
-      <div class="notification-fullcard-title">
+    <ModalDialog v-if="showClientMethod" v-on:close="toggleShowClientMethod">
+      <div class="clientmethod-fullcard-title">
         <div
-          class="notification-fullcard-color"
-          v-bind:style="{ background: notification.color }"
+          class="clientmethod-fullcard-color"
+          v-bind:style="{ background: clientMethod.color }"
         />
-        <div class="notification-card-service-title">
-          {{ notification.serviceName }}
-          <div class="notification-card-title">
-            {{ notification.title }}
+        <div class="clientmethod-card-service-title">
+          {{ clientMethod.hubName }}
+          <div class="clientmethod-card-title">
+            {{ clientMethod.title }}
           </div>
         </div>
-        <div class="notification-timestamp">
-          {{ notification.timestampStr() }}
+        <div class="clientmethod-timestamp">
+          {{ clientMethod.timestampStr() }}
         </div>
       </div>
-      <div class="notification-fullcard-content">
-        <pre>{{ notification.content }}</pre>
+      <div class="clientmethod-fullcard-content">
+        <pre>{{ clientMethod.content }}</pre>
       </div>
     </ModalDialog>
   </div>
 </template>
 
 <script>
-import { Notification } from "../models/Notification.model";
+import { ClientMethod } from "../models/ClientMethod.model";
 import ModalDialog from "./ModalDialog.vue";
 
 export default {
-  name: "NotificationCard",
+  name: "ClientMethodCard",
   components: {
     ModalDialog
   },
   props: {
-    notification: Notification
+    clientMethod: ClientMethod
   },
   data: function() {
     return {
-      showNotification: false,
+      showClientMethod: false,
       updateTimer: void 0,
       opacity: 1,
       progress: 100
     };
   },
   watch: {
-    notification: function() {
+    clientMethod: function() {
       this.opacity = this.calculateOpacity();
       this.progress = this.calculateProgress();
     }
@@ -82,55 +82,51 @@ export default {
     clearInterval(this.updateTimer);
   },
   methods: {
-    toggleShowNotification() {
-      this.showNotification = !this.showNotification;
+    toggleShowClientMethod() {
+      this.showClientMethod = !this.showClientMethod;
     },
     calculateOpacity: function() {
-      return (
-        1 - 0.8 * (this.notification.getElapsed() / this.notificationTimeout)
-      );
+      return 1 - 0.8 * (this.clientMethod.getElapsed() / this.cardTimeout);
     },
     calculateProgress: function() {
-      return (
-        100 - 100 * (this.notification.getElapsed() / this.notificationTimeout)
-      );
+      return 100 - 100 * (this.clientMethod.getElapsed() / this.cardTimeout);
     }
   },
   computed: {
-    notificationTimeout: function() {
-      return this.$root.$data.notificationsService.notificationTimeoutMs;
+    cardTimeout: function() {
+      return this.$root.$data.ClientMethodsService.clientMethodTimeoutMs;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-#NotificationCard {
+#ClientMethodCard {
   min-width: 300px;
 
-  .notification-progress {
+  .clientmethod-progress {
     margin-top: 4px;
     margin-bottom: 6px;
   }
 
-  .notification-card-color {
+  .clientmethod-card-color {
     float: left;
     height: 38px;
     width: 10px;
     border-radius: 4px 0px 0px 4px;
   }
 
-  .notification-card-service-title {
+  .clientmethod-card-service-title {
     margin-top: 2px;
     margin-left: 10px;
     font-size: 10px;
   }
 
-  .notification-card-title {
+  .clientmethod-card-title {
     font-size: 14px;
   }
 
-  .notification-card {
+  .clientmethod-card {
     display: flex;
     height: 40px;
     background-color: map-get($accent-color, 30);
@@ -147,15 +143,15 @@ export default {
     transition: opacity 2s;
   }
 
-  .notification-fullcard-color {
+  .clientmethod-fullcard-color {
     float: left;
     height: 38px;
     width: 10px;
     border-radius: 4px 0px 0px 0px;
   }
 
-  .notification-fullcard-title {
-    @extend .notification-card;
+  .clientmethod-fullcard-title {
+    @extend .clientmethod-card;
     cursor: default;
     background-color: map-get($accent-color, 400);
     font-size: 14px;
@@ -164,8 +160,8 @@ export default {
     margin-bottom: 0px;
   }
 
-  .notification-fullcard-content {
-    @extend .notification-card;
+  .clientmethod-fullcard-content {
+    @extend .clientmethod-card;
     display: block;
     cursor: default;
     border-radius: 0px 0px 5px 5px;
@@ -178,13 +174,13 @@ export default {
     overflow: auto;
   }
 
-  .notification-fullcard-content pre {
+  .clientmethod-fullcard-content pre {
     margin: 0px;
     font-size: 14px;
     color: map-get($primary-color, 900);
   }
 
-  .notification-timestamp {
+  .clientmethod-timestamp {
     margin-top: 10px;
     margin-right: 10px;
     margin-left: auto;

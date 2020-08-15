@@ -64,10 +64,10 @@ export default {
   },
   watch: {
     websocket: function() {
-      this.updateNotificationListening();
+      this.updateClientMethodListening();
     },
     listening: function() {
-      this.updateNotificationListening();
+      this.updateClientMethodListening();
       this.$emit("input", this.listening);
     },
     value: function() {
@@ -78,12 +78,12 @@ export default {
     toggleAccordion() {
       this.expanded = !this.expanded;
     },
-    updateNotificationListening() {
+    updateClientMethodListening() {
       if (this.websocket) {
         if (this.listening) {
           // eslint-disable-next-line
           var func = eventArgs => {
-            this.$root.$data.notificationsService.add(
+            this.$root.$data.ClientMethodsService.add(
               this.color,
               this.hubName,
               this.clientMethod.name,
