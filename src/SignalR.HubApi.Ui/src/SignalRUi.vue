@@ -141,7 +141,7 @@ export default {
       apiInfoErrorMessage: void 0,
       apiInfo: {
         info: {},
-        services: [],
+        hubs: [],
         definitions: {}
       },
       selectedServer: null,

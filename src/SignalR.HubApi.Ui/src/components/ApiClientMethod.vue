@@ -1,5 +1,5 @@
 <template>
-  <div id="ApiNotification">
+  <div id="ApiClientMethod">
     <div
       v-bind:class="{
         'accordion-expanded': expanded,
@@ -15,20 +15,20 @@
       >
         <div
           v-bind:class="{
-            'notification-name-expanded': expanded,
-            'notification-name-collapsed': !expanded
+            'clientmethod-name-expanded': expanded,
+            'clientmethod-name-collapsed': !expanded
           }"
         >
-          {{ notification.name }}
+          {{ clientMethod.name }}
         </div>
-        <div class="notification-description">
-          {{ notification.description }}
+        <div class="clientmethod-description">
+          {{ clientMethod.description }}
         </div>
-        <BFormCheckbox class="notification-enable" switch v-model="listening" />
+        <BFormCheckbox class="clientmethod-enable" switch v-model="listening" />
       </button>
       <div v-if="expanded" class="accordion-panel">
-        <div class="notification-subtitle">Parameters definition</div>
-        <div class="notification-definition">{{ notification.params }}</div>
+        <div class="clientmethod-subtitle">Parameters definition</div>
+        <div class="clientmethod-definition">{{ clientMethod.params }}</div>
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@ import { JsonRpcWebsocket } from "jsonrpc-client-websocket";
 import { BFormCheckbox } from "bootstrap-vue";
 
 export default {
-  name: "ApiNotification",
+  name: "ApiClientMethod",
   components: {
     BFormCheckbox
   },
@@ -53,14 +53,14 @@ export default {
     value: {
       type: Boolean
     },
-    notification: {
+    clientMethod: {
       name: String,
       description: String,
       params: {}
     },
     websocket: JsonRpcWebsocket,
     color: String,
-    serviceName: String
+    hubName: String
   },
   watch: {
     websocket: function() {
@@ -85,17 +85,17 @@ export default {
           var func = eventArgs => {
             this.$root.$data.notificationsService.add(
               this.color,
-              this.serviceName,
-              this.notification.name,
+              this.hubName,
+              this.clientMethod.name,
               JSON.stringify(eventArgs, null, 2)
             );
           };
-          this.websocket.on(this.notification.name, function(eventArgs) {
+          this.websocket.on(this.clientMethod.name, function(eventArgs) {
             func(eventArgs);
           });
         } else {
           // eslint-disable-next-line
-          this.websocket.on(this.notification.name, function(eventArgs) {});
+          this.websocket.on(this.clientMethod.name, function(eventArgs) {});
         }
       }
     }
@@ -104,7 +104,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#ApiNotification {
+#ApiClientMethod {
   color: map-get($primary-color, 400);
 
   .accordion-collapsed {
@@ -162,7 +162,7 @@ export default {
       3px 3px 3px 0 map-get($accent-color, 100);
   }
 
-  .notification-name {
+  .clientmethod-name {
     color: $light-text;
     font-size: 15px;
     padding: 7px;
@@ -172,36 +172,36 @@ export default {
     border-width: 1px;
   }
 
-  .notification-name-expanded {
-    @extend .notification-name;
+  .clientmethod-name-expanded {
+    @extend .clientmethod-name;
     border-color: map-get($accent-color, 700);
     background-color: map-get($accent-color, 700);
   }
 
-  .notification-name-collapsed {
-    @extend .notification-name;
+  .clientmethod-name-collapsed {
+    @extend .clientmethod-name;
     border-color: map-get($accent-color, 400);
     background-color: map-get($accent-color, 400);
   }
 
-  .notification-description {
+  .clientmethod-description {
     padding: 7px;
   }
 
-  .notification-enable {
+  .clientmethod-enable {
     padding: 7px;
     margin-left: auto;
     margin-right: 0;
   }
 
-  .notification-subtitle {
+  .clientmethod-subtitle {
     padding: 10px;
     font-size: 14px;
     color: map-get($primary-color, 900);
     background: map-get($accent-color, 50);
   }
 
-  .notification-definition {
+  .clientmethod-definition {
     margin: 10px;
     font-size: 14px;
     white-space: pre-wrap;

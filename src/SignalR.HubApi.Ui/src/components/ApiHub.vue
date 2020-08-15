@@ -11,7 +11,7 @@
       <BFormCheckbox
         class="hub-connection"
         switch
-        v-model="connectService"
+        v-model="connectHub"
         size="lg"
       />
       <div v-if="expanded" class="hub-arrow">
@@ -37,21 +37,21 @@
 
       <div v-if="hub.clientMethods.length > 0" class="hub-group">
         <div class="hub-group-title">
-          <BFormCheckbox switch v-model="enableAllNotifications" size="lg">
+          <BFormCheckbox switch v-model="enableAllClientMethods" size="lg">
             Client Methods
           </BFormCheckbox>
         </div>
         <div
-          v-for="(notification, index) in hub.clientMethods"
-          v-bind:key="notification.name"
+          v-for="(clientMethod, index) in hub.clientMethods"
+          v-bind:key="clientMethod.name"
         >
-          <ApiNotification
+          <ApiClientMethod
             class="hub-group-element"
             v-bind:websocket="websocket"
-            v-bind:notification="notification"
+            v-bind:clientMethod="clientMethod"
             v-bind:color="color"
-            v-bind:serviceName="hub.name"
-            v-model="notificationsState[index]"
+            v-bind:hubName="hub.name"
+            v-model="clientMethodsState[index]"
           />
         </div>
       </div>
@@ -61,7 +61,7 @@
 
 <script>
 import ApiMethod from "./ApiMethod.vue";
-import ApiNotification from "./ApiNotification.vue";
+import ApiClientMethod from "./ApiClientMethod.vue";
 import { BBadge, BFormCheckbox } from "bootstrap-vue";
 import {
   JsonRpcWebsocket,
@@ -77,7 +77,7 @@ export default {
   name: "ApiHub",
   components: {
     ApiMethod,
-    ApiNotification,
+    ApiClientMethod,
     BBadge,
     BFormCheckbox
   },
@@ -85,31 +85,31 @@ export default {
     return {
       expanded: true,
       panelDisplay: "block",
-      connectService: false,
+      connectHub: false,
       connectionStatus: ConnectionStatus.Disconnected,
       connectionError: "",
       websocket: void 0,
-      notificationsState: [],
-      enableAllNotifications: true
+      clientMethodsState: [],
+      enableAllClientMethods: true
     };
   },
   watch: {
-    enableAllNotifications: function() {
-      if (this.allNotificationsEnabled != this.enableAllNotifications) {
-        this.notificationsState = Array(this.hub.clientMethods.length).fill(
-          this.enableAllNotifications
+    enableAllClientMethods: function() {
+      if (this.allClientMethodsEnabled != this.enableAllClientMethods) {
+        this.clientMethodsState = Array(this.hub.clientMethods.length).fill(
+          this.enableAllClientMethods
         );
       }
     },
-    allNotificationsEnabled: function() {
-      this.enableAllNotifications = this.allNotificationsEnabled;
+    allClientMethodsEnabled: function() {
+      this.enableAllClientMethods = this.allClientMethodsEnabled;
     },
-    connectService: function() {
+    connectHub: function() {
       if (
-        (this.connectService === true &&
+        (this.connectHub === true &&
           (!this.websocket ||
             this.websocket.state !== WebsocketReadyStates.OPEN)) ||
-        (this.connectService === false &&
+        (this.connectHub === false &&
           this.websocket &&
           this.websocket.state === WebsocketReadyStates.OPEN)
       ) {
@@ -129,8 +129,8 @@ export default {
     }
   },
   created() {
-    this.notificationsState = Array(this.hub.clientMethods.length).fill(
-      this.enableAllNotifications
+    this.clientMethodsState = Array(this.hub.clientMethods.length).fill(
+      this.enableAllClientMethods
     );
   },
   methods: {
@@ -162,14 +162,14 @@ export default {
         this.websocket.state === WebsocketReadyStates.OPEN
           ? ConnectionStatus.Connected
           : ConnectionStatus.Disconnected;
-      this.connectService =
+      this.connectHub =
         this.websocket.state === WebsocketReadyStates.OPEN ? true : false;
     },
     async disconnect() {
       await this.websocket.close();
       this.websocket = void 0;
       this.connectionStatus = ConnectionStatus.Disconnected;
-      this.connectService = false;
+      this.connectHub = false;
       this.connectionError = "";
     },
     websocketErrorCallback(error) {
@@ -185,7 +185,7 @@ export default {
         this.websocket && this.websocket.state === WebsocketReadyStates.OPEN
           ? ConnectionStatus.Connected
           : ConnectionStatus.Disconnected;
-      this.connectService =
+      this.connectHub =
         this.websocket && this.websocket.state === WebsocketReadyStates.OPEN
           ? true
           : false;
@@ -195,8 +195,8 @@ export default {
     wsPath: function() {
       return this.serverInfo.ws + this.hub.path;
     },
-    allNotificationsEnabled: function() {
-      return this.notificationsState.every(x => x === true);
+    allClientMethodsEnabled: function() {
+      return this.clientMethodsState.every(x => x === true);
     }
   }
 };
