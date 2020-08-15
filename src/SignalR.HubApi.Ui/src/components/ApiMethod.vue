@@ -117,7 +117,7 @@ export default {
         clearTimeout(timeout);
         this.callInProgress = false;
         this.callStatus = "error";
-        this.callStatusText = "The service must be connected";
+        this.callStatusText = "The hub must be connected";
         this.websocketResponseOk = null;
         this.websocketResponseError = null;
         return;

@@ -1,59 +1,56 @@
 <template>
-  <div id="ApiService">
+  <div id="ApiHub">
     <button class="accordion" @click="toggleAccordion">
-      <div class="service-color" v-bind:style="{ background: color }" />
-      <div class="service-path">{{ service.path }}</div>
-      <div class="service-name">{{ service.name }}</div>
-      <div class="service-description">{{ service.description }}</div>
-      <BBadge
-        class="service-online"
-        v-if="this.connectionStatus === 'connected'"
-      >
+      <div class="hub-color" v-bind:style="{ background: color }" />
+      <div class="hub-path">{{ hub.path }}</div>
+      <div class="hub-name">{{ hub.name }}</div>
+      <div class="hub-description">{{ hub.description }}</div>
+      <BBadge class="hub-online" v-if="this.connectionStatus === 'connected'">
         {{ this.connectionStatus }}
       </BBadge>
       <BFormCheckbox
-        class="service-connection"
+        class="hub-connection"
         switch
         v-model="connectService"
         size="lg"
       />
-      <div v-if="expanded" class="service-arrow">
-        <img class="service-arrow-icon" src="../assets/down-arrow.svg" />
+      <div v-if="expanded" class="hub-arrow">
+        <img class="hub-arrow-icon" src="../assets/down-arrow.svg" />
       </div>
-      <div v-else class="service-arrow">
-        <img class="service-arrow-icon" src="../assets/right-arrow.svg" />
+      <div v-else class="hub-arrow">
+        <img class="hub-arrow-icon" src="../assets/right-arrow.svg" />
       </div>
     </button>
     <div class="panel" v-bind:style="{ display: panelDisplay }">
-      <div v-if="service.methods.length > 0" class="service-group">
-        <div class="service-group-title">
+      <div v-if="hub.methods.length > 0" class="hub-group">
+        <div class="hub-group-title">
           Methods
         </div>
-        <div v-for="method in service.methods" v-bind:key="method.name">
+        <div v-for="method in hub.methods" v-bind:key="method.name">
           <ApiMethod
-            class="service-group-element"
+            class="hub-group-element"
             v-bind:websocket="websocket"
             v-bind:method="method"
           />
         </div>
       </div>
 
-      <div v-if="service.clientMethods.length > 0" class="service-group">
-        <div class="service-group-title">
+      <div v-if="hub.clientMethods.length > 0" class="hub-group">
+        <div class="hub-group-title">
           <BFormCheckbox switch v-model="enableAllNotifications" size="lg">
             Client Methods
           </BFormCheckbox>
         </div>
         <div
-          v-for="(notification, index) in service.clientMethods"
+          v-for="(notification, index) in hub.clientMethods"
           v-bind:key="notification.name"
         >
           <ApiNotification
-            class="service-group-element"
+            class="hub-group-element"
             v-bind:websocket="websocket"
             v-bind:notification="notification"
             v-bind:color="color"
-            v-bind:serviceName="service.name"
+            v-bind:serviceName="hub.name"
             v-model="notificationsState[index]"
           />
         </div>
@@ -77,7 +74,7 @@ const ConnectionStatus = {
 };
 
 export default {
-  name: "ApiService",
+  name: "ApiHub",
   components: {
     ApiMethod,
     ApiNotification,
@@ -99,7 +96,7 @@ export default {
   watch: {
     enableAllNotifications: function() {
       if (this.allNotificationsEnabled != this.enableAllNotifications) {
-        this.notificationsState = Array(this.service.clientMethods.length).fill(
+        this.notificationsState = Array(this.hub.clientMethods.length).fill(
           this.enableAllNotifications
         );
       }
@@ -123,7 +120,7 @@ export default {
   props: {
     color: String,
     serverInfo: void 0,
-    service: {
+    hub: {
       name: String,
       path: String,
       description: String,
@@ -132,7 +129,7 @@ export default {
     }
   },
   created() {
-    this.notificationsState = Array(this.service.clientMethods.length).fill(
+    this.notificationsState = Array(this.hub.clientMethods.length).fill(
       this.enableAllNotifications
     );
   },
@@ -196,7 +193,7 @@ export default {
   },
   computed: {
     wsPath: function() {
-      return this.serverInfo.ws + this.service.path;
+      return this.serverInfo.ws + this.hub.path;
     },
     allNotificationsEnabled: function() {
       return this.notificationsState.every(x => x === true);
@@ -206,7 +203,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#ApiService {
+#ApiHub {
   color: map-get($primary-color, 400);
   min-width: 600px;
   margin-bottom: 20px;
@@ -236,25 +233,25 @@ export default {
     overflow: hidden;
   }
 
-  .service-color {
+  .hub-color {
     height: 59px;
     width: 10px;
     border-radius: 7px 0px 0px 7px;
   }
 
-  .service-connection {
+  .hub-connection {
     padding: 15px 5px 0px 0px;
     margin-right: 0px;
     margin-left: auto;
   }
 
-  .service-online {
+  .hub-online {
     text-align: center;
     margin: 20px 0px 0px 20px;
     background-color: map-get($accent-color, 500);
   }
 
-  .service-name {
+  .hub-name {
     height: 40px;
     line-height: 60px;
     text-align: center;
@@ -263,7 +260,7 @@ export default {
     font-size: 25px;
   }
 
-  .service-description {
+  .hub-description {
     height: 40px;
     line-height: 60px;
     text-align: center;
@@ -271,7 +268,7 @@ export default {
     font-size: 15px;
   }
 
-  .service-path {
+  .hub-path {
     color: map-get($primary-color, 30);
     background-color: map-get($primary-color, 400);
     font-size: 15px;
@@ -284,28 +281,28 @@ export default {
     border-width: 1px;
   }
 
-  .service-arrow {
+  .hub-arrow {
     height: 40px;
     line-height: 60px;
     margin-right: 10px;
     margin-left: 10px;
   }
 
-  .service-arrow-icon {
+  .hub-arrow-icon {
     height: 40px;
     line-height: 60px;
     height: 15px;
   }
 
-  .service-group {
+  .hub-group {
     padding: 10px 10px 0px 10px;
   }
 
-  .service-group-title {
+  .hub-group-title {
     font-size: 20px;
   }
 
-  .service-group-element {
+  .hub-group-element {
     padding: 8px;
   }
 }

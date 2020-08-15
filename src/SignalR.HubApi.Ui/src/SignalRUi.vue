@@ -56,14 +56,11 @@
       >
         <div class="apiInfo">
           <ApiInfo v-bind:info="apiInfo.info" />
-          <div
-            v-for="(service, index) in apiInfo.hubs"
-            v-bind:key="service.path"
-          >
-            <ApiService
+          <div v-for="(hub, index) in apiInfo.hubs" v-bind:key="hub.path">
+            <ApiHub
               v-bind:color="colorsService.getColor(index)"
               v-bind:serverInfo="selectedServerInfo"
-              v-bind:service="service"
+              v-bind:hub="hub"
             />
           </div>
         </div>
@@ -101,7 +98,7 @@
 
 <script>
 import ApiInfo from "./components/ApiInfo.vue";
-import ApiService from "./components/ApiService.vue";
+import ApiHub from "./components/ApiHub.vue";
 import {
   BAlert,
   BButton,
@@ -125,7 +122,7 @@ export default {
   components: {
     AddServerFormDialog,
     ApiInfo,
-    ApiService,
+    ApiHub,
     BAlert,
     BButton,
     BFormSelect,
