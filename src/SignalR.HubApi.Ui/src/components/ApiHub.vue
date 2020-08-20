@@ -68,6 +68,8 @@ import {
   WebsocketReadyStates
 } from "jsonrpc-client-websocket";
 
+import * as signalR from "@microsoft/signalr";
+
 const ConnectionStatus = {
   Connected: "connected",
   Disconnected: "disconnected"
@@ -89,6 +91,7 @@ export default {
       connectionStatus: ConnectionStatus.Disconnected,
       connectionError: "",
       websocket: void 0,
+      connection: void 0,
       clientMethodsState: [],
       enableAllClientMethods: true
     };
@@ -107,13 +110,13 @@ export default {
     connectHub: function() {
       if (
         (this.connectHub === true &&
-          (!this.websocket ||
-            this.websocket.state !== WebsocketReadyStates.OPEN)) ||
+          !this.connection &&
+          this.connectionStatus !== ConnectionStatus.Connected) ||
         (this.connectHub === false &&
-          this.websocket &&
-          this.websocket.state === WebsocketReadyStates.OPEN)
+          this.connection &&
+          this.connectionStatus !== ConnectionStatus.Disconnected)
       ) {
-        this.toggleWebsocketConnection();
+        this.toggleHubConnection();
       }
     }
   },
@@ -138,7 +141,7 @@ export default {
       this.expanded = !this.expanded;
       this.panelDisplay = this.expanded ? "block" : "none";
     },
-    async toggleWebsocketConnection() {
+    async toggleHubConnection() {
       if (this.connectionStatus === ConnectionStatus.Disconnected) {
         await this.connect();
       } else {
@@ -146,54 +149,37 @@ export default {
       }
     },
     async connect() {
-      this.websocket = new JsonRpcWebsocket(
-        this.wsPath,
-        2000,
-        this.websocketErrorCallback
-      );
+      console.log(`Trying to connect ${this.hubPath}`);
+      this.connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://localhost:5001/chat")
+        .build();
 
       try {
-        await this.websocket.open();
-      } catch (error) {
+        await this.connection.start();
+        console.log("connected");
+        this.connectionStatus = ConnectionStatus.Connected;
+        this.connectHub = true;
+      } catch (err) {
         this.callStatusText = "Failed to establish connection";
+        this.connectionStatus = ConnectionStatus.Disconnected;
+        this.connectHub = false;
       }
 
-      this.connectionStatus =
-        this.websocket.state === WebsocketReadyStates.OPEN
-          ? ConnectionStatus.Connected
-          : ConnectionStatus.Disconnected;
-      this.connectHub =
-        this.websocket.state === WebsocketReadyStates.OPEN ? true : false;
+      this.connection.onclose(async () => {
+        this.connectionStatus = ConnectionStatus.Disconnected;
+        this.connectHub = false;
+      });
     },
     async disconnect() {
-      await this.websocket.close();
-      this.websocket = void 0;
+      await this.connection.stop();
+      this.connection = void 0;
       this.connectionStatus = ConnectionStatus.Disconnected;
       this.connectHub = false;
-      this.connectionError = "";
-    },
-    websocketErrorCallback(error) {
-      this.connectionError = error.message;
-
-      if (error.code !== 1006) {
-        // close event
-        // eslint-disable-next-line
-        console.warn(error);
-      }
-
-      this.connectionStatus =
-        this.websocket && this.websocket.state === WebsocketReadyStates.OPEN
-          ? ConnectionStatus.Connected
-          : ConnectionStatus.Disconnected;
-      this.connectHub =
-        this.websocket && this.websocket.state === WebsocketReadyStates.OPEN
-          ? true
-          : false;
     }
   },
   computed: {
-    wsPath: function() {
-      return this.serverInfo.ws + this.hub.path;
+    hubPath: function() {
+      return this.serverInfo.url + this.hub.path;
     },
     allClientMethodsEnabled: function() {
       return this.clientMethodsState.every(x => x === true);

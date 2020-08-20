@@ -37,9 +37,10 @@ namespace SignalR.HubApi.Sample
                     builder =>
                     {
                         builder
-                        .AllowAnyOrigin()
                         .AllowAnyMethod()
-                        .AllowAnyHeader();
+                        .AllowAnyHeader()
+                        .WithOrigins("http://localhost:8080") // URL served by UI in dev
+                        .AllowCredentials();
                     });
             });
         }
