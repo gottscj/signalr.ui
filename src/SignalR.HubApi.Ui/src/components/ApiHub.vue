@@ -29,7 +29,7 @@
         <div v-for="method in hub.methods" v-bind:key="method.name">
           <ApiMethod
             class="hub-group-element"
-            v-bind:websocket="websocket"
+            v-bind:connection="connection"
             v-bind:method="method"
           />
         </div>
@@ -67,8 +67,7 @@ import {
   JsonRpcWebsocket,
   WebsocketReadyStates
 } from "jsonrpc-client-websocket";
-
-import * as signalR from "@microsoft/signalr";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 const ConnectionStatus = {
   Connected: "connected",
@@ -150,25 +149,26 @@ export default {
     },
     async connect() {
       console.log(`Trying to connect ${this.hubPath}`);
-      this.connection = new signalR.HubConnectionBuilder()
+      this.connection = new HubConnectionBuilder()
         .withUrl("https://localhost:5001/chat")
         .build();
 
       try {
         await this.connection.start();
-        console.log("connected");
         this.connectionStatus = ConnectionStatus.Connected;
         this.connectHub = true;
-      } catch (err) {
-        this.callStatusText = "Failed to establish connection";
-        this.connectionStatus = ConnectionStatus.Disconnected;
-        this.connectHub = false;
-      }
 
-      this.connection.onclose(async () => {
-        this.connectionStatus = ConnectionStatus.Disconnected;
-        this.connectHub = false;
-      });
+        this.connection.onclose(async error => {
+          if (!!error) {
+            console.error(error);
+          }
+          this.connectionStatus = ConnectionStatus.Disconnected;
+          this.connectHub = false;
+        });
+      } catch (error) {
+        console.error(error);
+        this.disconnect();
+      }
     },
     async disconnect() {
       await this.connection.stop();

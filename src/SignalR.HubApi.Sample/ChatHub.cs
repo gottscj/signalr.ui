@@ -21,6 +21,14 @@ namespace SignalR.HubApi.Sample
         }
 
         /// <summary>
+        /// Echoes a message back to the sender
+        /// </summary>
+        public string Echo(string message)
+        {
+            return message;
+        }
+
+        /// <summary>
         /// Adds a person to the chat
         /// </summary>
         public Task AddPerson(Person person)

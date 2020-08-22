@@ -40,17 +40,15 @@
         </div>
         <!--TODO: create json text area component shared among parameters and response -->
         <div class="method-subtitle">Response</div>
-        <div class="websocket-response">
+        <div class="hub-response">
           <textarea
             readonly
             v-bind:class="
-              !websocketResponseError
-                ? 'websocket-response-ok'
-                : 'websocket-response-error'
+              !hubResponseError ? 'hub-response-ok' : 'hub-response-error'
             "
-            v-model="websocketResponse"
+            v-model="hubResponse"
             placeholder="JSON response will show here"
-            v-bind:rows="websocketResponseRows"
+            v-bind:rows="hubResponseRows"
           />
         </div>
       </div>
@@ -61,10 +59,7 @@
 <script>
 import ApiMethodParameters from "./ApiMethodParameters.vue";
 import ActionButtonWithStatus from "./ActionButtonWithStatus.vue";
-import {
-  JsonRpcWebsocket,
-  WebsocketReadyStates
-} from "jsonrpc-client-websocket";
+import { HubConnection, HubConnectionState } from "@microsoft/signalr";
 
 export default {
   name: "ApiMethod",
@@ -76,15 +71,15 @@ export default {
     return {
       expanded: false,
       parametersJson: "",
-      websocketResponseOk: null,
-      websocketResponseError: null,
+      hubResponseOk: null,
+      hubResponseError: null,
       callInProgress: false,
       callStatus: "none",
       callStatusText: null
     };
   },
   props: {
-    websocket: JsonRpcWebsocket,
+    connection: HubConnection,
     method: {
       name: String,
       description: String,
@@ -111,48 +106,62 @@ export default {
       }, 1000);
 
       if (
-        !this.websocket ||
-        this.websocket.state !== WebsocketReadyStates.OPEN
+        !this.connection ||
+        this.connection.state !== HubConnectionState.Connected
       ) {
         clearTimeout(timeout);
         this.callInProgress = false;
         this.callStatus = "error";
         this.callStatusText = "The hub must be connected";
-        this.websocketResponseOk = null;
-        this.websocketResponseError = null;
+        this.hubResponseOk = null;
+        this.hubResponseError = null;
         return;
       }
 
-      this.websocket
-        .call(this.method.name, this.parametersJson)
+      const parameters = this.processMethodParameters(this.parametersJson);
+
+      this.connection
+        .invoke(this.method.name, ...parameters)
         .then(response => {
-          this.websocketResponseOk = JSON.stringify(response, null, 2);
-          this.websocketResponseError = null;
+          this.hubResponseOk = JSON.stringify(response, null, 2);
+          this.hubResponseError = null;
           clearTimeout(timeout);
           this.callInProgress = false;
           this.callStatus = "ok";
         })
         .catch(error => {
-          this.websocketResponseError = JSON.stringify(error, null, 2);
-          this.websocketResponseOk = null;
+          this.hubResponseError = JSON.stringify(error, null, 2);
+          this.hubResponseOk = null;
           clearTimeout(timeout);
           this.callInProgress = false;
           this.callStatus = "ok";
         });
+    },
+    processMethodParameters(parametersJson) {
+      const parametersArray = [];
+      for (const param of parametersJson) {
+        const values = Object.values(param);
+        if (values.length != 1) {
+          console.log("Invalid parameter has more than 1 value", param);
+          return void 0;
+        }
+        parametersArray.push(values[0]);
+      }
+      return parametersArray;
     }
   },
   computed: {
-    websocketResponse: function() {
-      const response = this.websocketResponseError
-        ? this.websocketResponseError
-        : this.websocketResponseOk;
+    hubResponse: function() {
+      const response = this.hubResponseError
+        ? this.hubResponseError
+        : this.hubResponseOk;
       return response ? response : "";
     },
-    websocketResponseRows: function() {
-      if (!this.websocketResponse) {
+    hubResponseRows: function() {
+      if (!this.hubResponse) {
         return 1;
       }
-      return this.websocketResponse.split("\n").length;
+      return this.hubResponse.split("\n").length;
     }
   }
 };
@@ -254,18 +263,18 @@ export default {
     margin: 10px;
   }
 
-  .websocket-response {
+  .hub-response {
     margin: 10px;
   }
 
-  .websocket-response-error {
+  .hub-response-error {
     width: 800px;
     font-size: 14px;
     border-color: $error-color;
     color: $error-color;
   }
 
-  .websocket-response-ok {
+  .hub-response-ok {
     width: 800px;
     font-size: 14px;
     border-color: map-get($secondary-color, A200);

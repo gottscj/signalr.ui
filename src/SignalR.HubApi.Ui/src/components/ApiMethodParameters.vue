@@ -36,13 +36,16 @@ export default {
   },
   methods: {
     createParametersJsonTemplate() {
-      let parametersJson = {};
+      let parametersJsonArray = [];
       this.parameters.forEach(param => {
-        // eslint-disable-next-line
-        parametersJson[param.name] = this.$root.$data.typeDefinitionsService.createDefaultObject(param.schema);
+        parametersJsonArray.push({
+          [param.name]: this.$root.$data.typeDefinitionsService.createDefaultObject(
+            param.schema
+          )
+        });
       });
 
-      const parametersTemplate = JSON.stringify(parametersJson, null, 2);
+      const parametersTemplate = JSON.stringify(parametersJsonArray, null, 2);
 
       this.parametersCodeRows = parametersTemplate.split("\n").length;
 
