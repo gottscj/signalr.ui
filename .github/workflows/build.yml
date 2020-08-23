@@ -10,18 +10,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Move to src/SignalR.HubApi.Ui
-          run: cd src/SignalR.HubApi.Ui
+        run: cd src/SignalR.HubApi.Ui
       - name: Install and build SignalR.HubApi.Ui
-          run: |
+        run: |
             npm ci
             npm run build
       - name: Test SignalR.HubApi.Ui
-          run: npm run test
+        run: npm run test
       - name: Copy SignalR.HubApi.Ui distribution to SignalR.HubApi/web
-          run: mv -v ./dist ../SignalR.HubApi/web
+        run: mv -v ./dist ../SignalR.HubApi/web
       - name: Move to back to project root
-          run: cd ../..
+        run: cd ../..
       - name: Build SignalR.HubApi solution
-          run: dotnet build SignalR.HubApi.sln --configuration Release
+        run: dotnet build SignalR.HubApi.sln --configuration Release
       - name: Test SignalR.HubApi solution
-          run: dotnet test SignalR.HubApi.sln --verbosity normal  
+        run: dotnet test SignalR.HubApi.sln --verbosity normal
+
