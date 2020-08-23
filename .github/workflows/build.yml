@@ -9,8 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Move to src/SignalR.HubApi.Ui
-        run: cd src/SignalR.HubApi.Ui
       - name: Use Node.js
         uses: actions/setup-node@v1
       - name: Install and build SignalR.HubApi.Ui
@@ -25,8 +23,6 @@ jobs:
       - name: Copy SignalR.HubApi.Ui distribution to SignalR.HubApi/web
         run: mv -v src/SignalR.HubApi.Ui/dist src/SignalR.HubApi/web
       - name: Build SignalR.HubApi solution
-        run: |
-          dotnet build src/SignalR.HubApi.sln --configuration Release
+        run: dotnet build src/SignalR.HubApi.sln --configuration Release
       - name: Test SignalR.HubApi solution
-        run: |
-          dotnet test src/SignalR.HubApi.sln --verbosity normal
+        run: dotnet test src/SignalR.HubApi.sln --verbosity normal
