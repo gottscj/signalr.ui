@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { JsonRpcWebsocket } from "jsonrpc-client-websocket";
 import { BFormCheckbox } from "bootstrap-vue";
+import { HubConnection } from "@microsoft/signalr";
 
 export default {
   name: "ApiClientMethod",
@@ -58,12 +58,12 @@ export default {
       description: String,
       params: {}
     },
-    websocket: JsonRpcWebsocket,
+    connection: HubConnection,
     color: String,
     hubName: String
   },
   watch: {
-    websocket: function() {
+    connection: function() {
       this.updateClientMethodListening();
     },
     listening: function() {
@@ -79,9 +79,8 @@ export default {
       this.expanded = !this.expanded;
     },
     updateClientMethodListening() {
-      if (this.websocket) {
+      if (this.connection) {
         if (this.listening) {
-          // eslint-disable-next-line
           var func = eventArgs => {
             this.$root.$data.ClientMethodsService.add(
               this.color,
@@ -90,12 +89,11 @@ export default {
               JSON.stringify(eventArgs, null, 2)
             );
           };
-          this.websocket.on(this.clientMethod.name, function(eventArgs) {
+          this.connection.on(this.clientMethod.name, function(eventArgs) {
             func(eventArgs);
           });
         } else {
-          // eslint-disable-next-line
-          this.websocket.on(this.clientMethod.name, function(eventArgs) {});
+          this.connection.off(this.clientMethod.name);
         }
       }
     }

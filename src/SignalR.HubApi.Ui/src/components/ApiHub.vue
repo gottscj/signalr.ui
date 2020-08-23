@@ -47,7 +47,7 @@
         >
           <ApiClientMethod
             class="hub-group-element"
-            v-bind:websocket="websocket"
+            v-bind:connection="connection"
             v-bind:clientMethod="clientMethod"
             v-bind:color="color"
             v-bind:hubName="hub.name"
@@ -63,10 +63,6 @@
 import ApiMethod from "./ApiMethod.vue";
 import ApiClientMethod from "./ApiClientMethod.vue";
 import { BBadge, BFormCheckbox } from "bootstrap-vue";
-import {
-  JsonRpcWebsocket,
-  WebsocketReadyStates
-} from "jsonrpc-client-websocket";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 const ConnectionStatus = {
@@ -89,7 +85,6 @@ export default {
       connectHub: false,
       connectionStatus: ConnectionStatus.Disconnected,
       connectionError: "",
-      websocket: void 0,
       connection: void 0,
       clientMethodsState: [],
       enableAllClientMethods: true

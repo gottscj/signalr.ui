@@ -62,20 +62,6 @@
           placeholder="hubapi/chat/api.json"
         ></BFormInput>
       </BFormGroup>
-
-      <BFormGroup
-        description="Websocket base url with port number"
-        label="Websocket URL"
-        label-for="ws-input"
-        invalid-feedback="Websocket URL is required"
-      >
-        <BFormInput
-          id="ws-input"
-          v-model="$v.form.ws.$model"
-          v-bind:state="$v.form.ws.$dirty ? !$v.form.ws.$error : null"
-          placeholder="ws://localhost:5000"
-        ></BFormInput>
-      </BFormGroup>
     </BForm>
   </BModal>
 </template>
@@ -120,8 +106,7 @@ export default {
       form: {
         name: null,
         url: null,
-        docs: null,
-        ws: null
+        docs: null
       }
     };
   },
@@ -135,9 +120,6 @@ export default {
         required
       },
       docs: {
-        required
-      },
-      ws: {
         required
       }
     }
@@ -155,7 +137,6 @@ export default {
     resetForm() {
       this.form.name = "";
       this.form.url = "";
-      this.form.ws = "";
       this.form.docs = "";
       this.$v.$reset();
     },
@@ -175,7 +156,6 @@ export default {
       this.$emit("addServer", {
         name: this.form.name,
         url: this.form.url,
-        ws: this.form.ws,
         docs: this.form.docs
       });
 
