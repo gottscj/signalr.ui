@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Move to src/SignalR.HubApi.Ui
         run: cd src/SignalR.HubApi.Ui
+      - name: Use Node.js
+        uses: actions/setup-node@v1
       - name: Install and build SignalR.HubApi.Ui
         run: |
             npm ci
@@ -25,4 +27,3 @@ jobs:
         run: dotnet build SignalR.HubApi.sln --configuration Release
       - name: Test SignalR.HubApi solution
         run: dotnet test SignalR.HubApi.sln --verbosity normal
-
