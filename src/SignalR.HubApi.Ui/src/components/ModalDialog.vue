@@ -3,7 +3,7 @@
     <div class="dialog-mask" @click="$emit('close')">
       <div class="dialog-wrapper">
         <div class="dialog-container">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </div>
@@ -12,7 +12,8 @@
 
 <script>
 export default {
-  name: "ModalDialog"
+  name: "ModalDialog",
+  emits: ["close"],
 };
 </script>
 

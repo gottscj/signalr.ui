@@ -1,40 +1,42 @@
 <template>
   <div id="ApiMethod">
     <div
-      v-bind:class="{
+      :class="{
         'accordion-expanded': expanded,
-        'accordion-collapsed': !expanded
+        'accordion-collapsed': !expanded,
       }"
     >
       <button
-        v-bind:class="{
+        :class="{
           'accordion-top-expanded': expanded,
-          'accordion-top-collapsed': !expanded
+          'accordion-top-collapsed': !expanded,
         }"
         @click="toggleAccordion"
       >
         <div
-          v-bind:class="{
+          :class="{
             'method-name-expanded': expanded,
-            'method-name-collapsed': !expanded
+            'method-name-collapsed': !expanded,
           }"
         >
           {{ method.name }}
         </div>
-        <div class="method-description">{{ method.description }}</div>
+        <div class="method-description">
+          {{ method.description }}
+        </div>
       </button>
       <div v-show="expanded" class="accordion-panel">
         <div class="method-subtitle">Parameters</div>
         <div class="method-parameters">
           <ApiMethodParameters
-            v-bind:parameters="method.params"
-            v-on:parameters-changed="onParametersChanged"
+            :parameters="method.params"
+            @parameters-changed="onParametersChanged"
           />
           <ActionButtonWithStatus
             text="Try me!"
-            hoverText="Go!"
-            v-bind:status="callStatus"
-            v-bind:statusText="callStatusText"
+            hover-text="Go!"
+            :status="callStatus"
+            :status-text="callStatusText"
             @click="callMethod"
           />
         </div>
@@ -42,13 +44,13 @@
         <div class="method-subtitle">Response</div>
         <div class="hub-response">
           <textarea
+            v-model="hubResponse"
             readonly
-            v-bind:class="
+            :class="
               !hubResponseError ? 'hub-response-ok' : 'hub-response-error'
             "
-            v-model="hubResponse"
             placeholder="JSON response will show here"
-            v-bind:rows="hubResponseRows"
+            :rows="hubResponseRows"
           />
         </div>
       </div>
@@ -65,18 +67,7 @@ export default {
   name: "ApiMethod",
   components: {
     ApiMethodParameters,
-    ActionButtonWithStatus
-  },
-  data: function() {
-    return {
-      expanded: false,
-      parametersJson: "",
-      hubResponseOk: null,
-      hubResponseError: null,
-      callInProgress: false,
-      callStatus: "none",
-      callStatusText: null
-    };
+    ActionButtonWithStatus,
   },
   props: {
     connection: HubConnection,
@@ -84,8 +75,33 @@ export default {
       name: String,
       description: String,
       response: Object,
-      parameters: Array
-    }
+      parameters: Array,
+    },
+  },
+  data: function () {
+    return {
+      expanded: false,
+      parametersJson: "",
+      hubResponseOk: null,
+      hubResponseError: null,
+      callInProgress: false,
+      callStatus: "none",
+      callStatusText: null,
+    };
+  },
+  computed: {
+    hubResponse: function () {
+      const response = this.hubResponseError
+        ? this.hubResponseError
+        : this.hubResponseOk;
+      return response ? response : "";
+    },
+    hubResponseRows: function () {
+      if (!this.hubResponse) {
+        return 1;
+      }
+      return this.hubResponse.split("\n").length;
+    },
   },
   methods: {
     toggleAccordion() {
@@ -122,14 +138,14 @@ export default {
 
       this.connection
         .invoke(this.method.name, ...parameters)
-        .then(response => {
+        .then((response) => {
           this.hubResponseOk = JSON.stringify(response, null, 2);
           this.hubResponseError = null;
           clearTimeout(timeout);
           this.callInProgress = false;
           this.callStatus = "ok";
         })
-        .catch(error => {
+        .catch((error) => {
           this.hubResponseError = JSON.stringify(error, null, 2);
           this.hubResponseOk = null;
           clearTimeout(timeout);
@@ -148,22 +164,8 @@ export default {
         parametersArray.push(values[0]);
       }
       return parametersArray;
-    }
-  },
-  computed: {
-    hubResponse: function() {
-      const response = this.hubResponseError
-        ? this.hubResponseError
-        : this.hubResponseOk;
-      return response ? response : "";
     },
-    hubResponseRows: function() {
-      if (!this.hubResponse) {
-        return 1;
-      }
-      return this.hubResponse.split("\n").length;
-    }
-  }
+  },
 };
 </script>
 

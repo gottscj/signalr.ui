@@ -2,11 +2,11 @@
   <BModal
     ref="modal"
     title="Add a server to your local configuration"
-    v-on:show="resetForm"
-    v-on:hidden="close"
-    v-on:ok="handleOk"
+    @show="resetForm"
+    @hidden="close"
+    @ok="handleOk"
   >
-    <BForm v-on:submit.stop.prevent="handleSubmit">
+    <BForm @submit.stop.prevent="handleSubmit">
       <BFormGroup
         description="Server name to be used for display"
         label="Name"
@@ -15,10 +15,10 @@
         <BFormInput
           id="name-input"
           v-model="$v.form.name.$model"
-          v-bind:state="$v.form.name.$dirty ? !$v.form.name.$error : null"
+          :state="$v.form.name.$dirty ? !$v.form.name.$error : null"
           aria-describedby="name-input-live-feedback"
           placeholder="My server"
-        ></BFormInput>
+        />
 
         <BFormInvalidFeedback
           v-if="!$v.form.name.required"
@@ -44,9 +44,9 @@
         <BFormInput
           id="url-input"
           v-model="$v.form.url.$model"
-          v-bind:state="$v.form.url.$dirty ? !$v.form.url.$error : null"
+          :state="$v.form.url.$dirty ? !$v.form.url.$error : null"
           placeholder="http://localhost:5000"
-        ></BFormInput>
+        />
       </BFormGroup>
 
       <BFormGroup
@@ -58,9 +58,9 @@
         <BFormInput
           id="docs-input"
           v-model="$v.form.docs.$model"
-          v-bind:state="$v.form.docs.$dirty ? !$v.form.docs.$error : null"
+          :state="$v.form.docs.$dirty ? !$v.form.docs.$error : null"
           placeholder="hubapi/chat/api.json"
-        ></BFormInput>
+        />
       </BFormGroup>
     </BForm>
   </BModal>
@@ -72,7 +72,7 @@ import {
   BFormInvalidFeedback,
   BModal,
   BFormGroup,
-  BFormInput
+  BFormInput,
 } from "bootstrap-vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
@@ -82,56 +82,57 @@ function mustBeUnique(chosenElement) {
     !this.existingServerNames ||
     !chosenElement ||
     !this.existingServerNames
-      .map(n => n.trim().toLowerCase())
+      .map((n) => n.trim().toLowerCase())
       .includes(chosenElement.trim().toLowerCase())
   );
 }
 
 export default {
-  mixins: [validationMixin],
   name: "AddServerFormDialog",
   components: {
     BModal,
     BForm,
     BFormInvalidFeedback,
     BFormGroup,
-    BFormInput
+    BFormInput,
   },
+  mixins: [validationMixin],
   props: {
     show: Boolean,
-    existingServerNames: Array
+    existingServerNames: Array,
   },
+  emits: ["add-server", "close"],
   data() {
     return {
       form: {
         name: null,
         url: null,
-        docs: null
-      }
+        docs: null,
+      },
     };
   },
   validations: {
     form: {
       name: {
         required,
-        mustBeUnique
+        mustBeUnique,
       },
       url: {
-        required
+        required,
       },
       docs: {
-        required
-      }
-    }
+        required,
+      },
+    },
   },
   watch: {
-    show: function() {
+    show: function () {
       if (this.show) {
         this.$refs.modal.show();
       } else {
         this.close();
       }
-    }
+    },
   },
   methods: {
     resetForm() {
@@ -156,7 +157,7 @@ export default {
       this.$emit("add-server", {
         name: this.form.name,
         url: this.form.url,
-        docs: this.form.docs
+        docs: this.form.docs,
       });
 
       // Hide the modal manually
@@ -168,8 +169,8 @@ export default {
       this.$refs.modal.hide();
       this.$emit("close");
       this.resetForm();
-    }
-  }
+    },
+  },
 };
 </script>
 

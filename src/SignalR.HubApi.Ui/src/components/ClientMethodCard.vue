@@ -1,10 +1,10 @@
 <template>
   <div id="ClientMethodCard">
-    <div class="clientmethod-progress" v-bind:style="{ opacity: opacity }">
-      <div class="clientmethod-card" v-on:click="toggleShowClientMethod">
+    <div class="clientmethod-progress" :style="{ opacity: opacity }">
+      <div class="clientmethod-card" @click="toggleShowClientMethod">
         <div
           class="clientmethod-card-color"
-          v-bind:style="{ background: clientMethod.color }"
+          :style="{ background: clientMethod.color }"
         />
         <div class="clientmethod-card-service-title">
           {{ clientMethod.hubName }}
@@ -17,14 +17,14 @@
         </div>
       </div>
       <div class="progress">
-        <div class="progressbar" v-bind:style="{ width: `${progress}%` }" />
+        <div class="progressbar" :style="{ width: `${progress}%` }" />
       </div>
     </div>
-    <ModalDialog v-if="showClientMethod" v-on:close="toggleShowClientMethod">
+    <ModalDialog v-if="showClientMethod" @close="toggleShowClientMethod">
       <div class="clientmethod-fullcard-title">
         <div
           class="clientmethod-fullcard-color"
-          v-bind:style="{ background: clientMethod.color }"
+          :style="{ background: clientMethod.color }"
         />
         <div class="clientmethod-card-service-title">
           {{ clientMethod.hubName }}
@@ -50,24 +50,29 @@ import ModalDialog from "./ModalDialog.vue";
 export default {
   name: "ClientMethodCard",
   components: {
-    ModalDialog
+    ModalDialog,
   },
   props: {
-    clientMethod: ClientMethod
+    clientMethod: ClientMethod,
   },
-  data: function() {
+  data: function () {
     return {
       showClientMethod: false,
       updateTimer: void 0,
       opacity: 1,
-      progress: 100
+      progress: 100,
     };
   },
+  computed: {
+    cardTimeout: function () {
+      return this.$root.$data.ClientMethodsService.clientMethodTimeoutMs;
+    },
+  },
   watch: {
-    clientMethod: function() {
+    clientMethod: function () {
       this.opacity = this.calculateOpacity();
       this.progress = this.calculateProgress();
-    }
+    },
   },
   mounted() {
     const self = this;
@@ -78,25 +83,20 @@ export default {
       self.progress = self.calculateProgress();
     }, 2000);
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.updateTimer);
   },
   methods: {
     toggleShowClientMethod() {
       this.showClientMethod = !this.showClientMethod;
     },
-    calculateOpacity: function() {
+    calculateOpacity: function () {
       return 1 - 0.8 * (this.clientMethod.getElapsed() / this.cardTimeout);
     },
-    calculateProgress: function() {
+    calculateProgress: function () {
       return 100 - 100 * (this.clientMethod.getElapsed() / this.cardTimeout);
-    }
+    },
   },
-  computed: {
-    cardTimeout: function() {
-      return this.$root.$data.ClientMethodsService.clientMethodTimeoutMs;
-    }
-  }
 };
 </script>
 

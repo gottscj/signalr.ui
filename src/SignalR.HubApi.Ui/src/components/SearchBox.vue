@@ -1,10 +1,10 @@
 <template>
   <BInputGroup size="sm">
     <BFormInput
-      :placeholder="placeholder"
       v-model="searchString"
+      :placeholder="placeholder"
       @input="$emit('input', searchString)"
-    ></BFormInput>
+    />
     <BInputGroupAppend>
       <BButton>Search</BButton>
     </BInputGroupAppend>
@@ -16,7 +16,7 @@ import {
   BInputGroup,
   BInputGroupAppend,
   BFormInput,
-  BButton
+  BButton,
 } from "bootstrap-vue";
 
 export default {
@@ -25,14 +25,18 @@ export default {
     BInputGroup,
     BInputGroupAppend,
     BFormInput,
-    BButton
+    BButton,
   },
-  data: function() {
+  props: {
+    value: String,
+    placeholder: String,
+  },
+  emits: ["input"],
+  data: function () {
     return {
-      searchString: this.value
+      searchString: this.value,
     };
   },
-  props: ["value", "placeholder"]
 };
 </script>
 

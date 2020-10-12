@@ -2,15 +2,15 @@
   <address id="Contact">
     Contact:
     <a
-      class="contact-element"
       v-if="!!email && !!name"
-      v-bind:href="`mailto:${email}`"
+      class="contact-element"
+      :href="`mailto:${email}`"
       >{{ name }}</a
     >
-    <template class="contact-element" v-if="!!email && !!name && !!url">
+    <template v-if="!!email && !!name && !!url" class="contact-element">
       -
     </template>
-    <a class="contact-element" v-if="!!url" v-bind:href="url">{{ url }}</a>
+    <a v-if="!!url" class="contact-element" :href="url">{{ url }}</a>
   </address>
 </template>
 
@@ -20,8 +20,8 @@ export default {
   props: {
     name: String,
     email: String,
-    url: String
-  }
+    url: String,
+  },
 };
 </script>
 

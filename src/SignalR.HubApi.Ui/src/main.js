@@ -6,9 +6,11 @@ import { ClientMethodsService } from "./services/ClientMethods.service";
 Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(SignalRUi),
-  data: {
-    typeDefinitionsService: TypeDefinitionsService,
-    ClientMethodsService: new ClientMethodsService()
-  }
+  data: function () {
+    return {
+      typeDefinitionsService: TypeDefinitionsService,
+      ClientMethodsService: new ClientMethodsService(),
+    };
+  },
+  render: (h) => h(SignalRUi),
 }).$mount("#SignalRUi");

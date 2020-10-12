@@ -7,35 +7,33 @@
       </BNavbarBrand>
 
       <!-- search box is disabled, because the functionality isn't implemented yet -->
-      <BNavbarNav class="ml-auto" v-if="apiInfo !== void 0 && false">
-        <SearchBox
-          placeholder="Search for a method"
-          v-model="searchString"
-        ></SearchBox>
+      <BNavbarNav v-if="apiInfo !== void 0 && false" class="ml-auto">
+        <SearchBox v-model="searchString" placeholder="Search for a method" />
       </BNavbarNav>
 
-      <BNavbarNav class="ml-auto" v-if="!isSelfHosted">
+      <BNavbarNav v-if="!isSelfHosted" class="ml-auto">
         <BInputGroup prepend="Server" size="sm">
           <BFormSelect
+            v-model="selectedServer"
             right
             size="sm"
-            v-model="selectedServer"
-            v-bind:options="selectServerOptions"
-            v-on:change="selectServer"
+            :options="selectServerOptions"
+            @change="selectServer"
           />
           <BInputGroupAppend>
-            <BButton v-on:click="showAddServerDialog = !showAddServerDialog"
-              >+</BButton
-            >
+            <BButton @click="showAddServerDialog = !showAddServerDialog">
+              +
+            </BButton>
             <BButton
               v-if="
                 selectedServerInfo !== void 0 &&
-                  selectedServerInfo.origin === 'local'
+                selectedServerInfo.origin === 'local'
               "
-              v-on:click="removeSelectedServer"
-              v-bind:style="{ 'background-color': '#c46464' }"
-              >-</BButton
+              :style="{ 'background-color': '#c46464' }"
+              @click="removeSelectedServer"
             >
+              -
+            </BButton>
           </BInputGroupAppend>
         </BInputGroup>
       </BNavbarNav>
@@ -43,43 +41,43 @@
 
     <AddServerFormDialog
       v-if="!isSelfHosted"
-      v-bind:show="showAddServerDialog"
-      v-bind:existingServerNames="allServerNames"
-      v-on:close="showAddServerDialog = false"
-      v-on:add-server="addServer($event)"
+      :show="showAddServerDialog"
+      :existing-server-names="allServerNames"
+      @close="showAddServerDialog = false"
+      @add-server="addServer($event)"
     />
 
     <div v-if="apiInfo !== void 0">
       <div
         class="split left"
-        v-bind:style="{ width: showClientMethods ? '80%' : '100%' }"
+        :style="{ width: showClientMethods ? '80%' : '100%' }"
       >
         <div class="apiInfo">
-          <ApiInfo v-bind:info="apiInfo.info" />
-          <div v-for="(hub, index) in apiInfo.hubs" v-bind:key="hub.path">
+          <ApiInfo :info="apiInfo.info" />
+          <div v-for="(hub, index) in apiInfo.hubs" :key="hub.path">
             <ApiHub
-              v-bind:color="colorsService.getColor(index)"
-              v-bind:serverInfo="selectedServerInfo"
-              v-bind:hub="hub"
+              :color="colorsService.getColor(index)"
+              :server-info="selectedServerInfo"
+              :hub="hub"
             />
           </div>
         </div>
         <ClientMethodPanelButton
           class="clientmethods-button"
-          v-bind:style="{ left: showClientMethods ? '80%' : '100%' }"
-          v-bind:numberOfClientMethods="
+          :style="{ left: showClientMethods ? '80%' : '100%' }"
+          :number-of-client-methods="
             $root.$data.ClientMethodsService.clientMethods.length
           "
-          v-bind:checked="false"
-          v-on:click="showClientMethods = !showClientMethods"
+          :checked="false"
+          @click="showClientMethods = !showClientMethods"
         />
       </div>
       <div
         class="split right"
-        v-bind:style="{ width: showClientMethods ? '20%' : '0%' }"
+        :style="{ width: showClientMethods ? '20%' : '0%' }"
       >
         <ClientMethodsPanel
-          v-bind:clientMethods="$root.$data.ClientMethodsService.clientMethods"
+          :client-methods="$root.$data.ClientMethodsService.clientMethods"
         />
       </div>
     </div>
@@ -107,7 +105,7 @@ import {
   BInputGroupAppend,
   BNavbar,
   BNavbarNav,
-  BNavbarBrand
+  BNavbarBrand,
 } from "bootstrap-vue";
 import ClientMethodsPanel from "./components/ClientMethodsPanel.vue";
 import ClientMethodPanelButton from "./components/ClientMethodPanelButton.vue";
@@ -133,16 +131,16 @@ export default {
     BNavbarNav,
     ClientMethodsPanel,
     ClientMethodPanelButton,
-    SearchBox
+    SearchBox,
   },
-  data: function() {
+  data: function () {
     return {
       isSelfHosted: false,
       apiInfoErrorMessage: void 0,
       apiInfo: {
         info: {},
         hubs: [],
-        definitions: {}
+        definitions: {},
       },
       selectedServer: null,
       servers: [
@@ -153,21 +151,85 @@ export default {
           docs: String,
           origin: {
             type: "config" | "local",
-            validator: function(value) {
+            validator: function (value) {
               return ["config", "local"].indexOf(value) !== -1;
-            }
-          }
-        }
+            },
+          },
+        },
       ],
       searchString: "",
       showClientMethods: false,
       showAddServerDialog: false,
-      colorsService: new ColorsService()
+      colorsService: new ColorsService(),
     };
+  },
+  computed: {
+    selectServerOptions: function () {
+      if (!this.servers) {
+        return [];
+      }
+
+      return this.servers.map((s) => {
+        return {
+          value: s.name,
+          text: `${s.name} (${s.url})${s.origin === "local" ? " *" : ""}`,
+        };
+      });
+    },
+    selectedServerInfo: function () {
+      if (!this.selectedServer) {
+        return void 0;
+      }
+
+      const selectedServerInfo = this.servers.filter(
+        (x) => x.name === this.selectedServer
+      );
+      if (selectedServerInfo.length != 1) {
+        console.warn(
+          `None or more than 1 server with name ${this.selectedServer} were found. The server name must be unique.`
+        );
+        return void 0;
+      }
+
+      return selectedServerInfo[0];
+    },
+    allServerNames: function () {
+      return this.servers ? this.servers.map((s) => s.name) : [];
+    },
+  },
+  async mounted() {
+    this.apiInfo = void 0;
+
+    const configFile = "./config.json";
+    const errorMessage = `Failed to load configuration file from ${configFile}.`;
+    try {
+      const config = await this.getJson(configFile);
+      this.servers = config.servers.map((s) => {
+        return { ...s, origin: "config" };
+      });
+
+      const localServers = this.getLocalServers();
+      if (localServers !== void 0) {
+        this.servers.push(...localServers);
+      }
+
+      const lastSelectedServer = localStorage.selectedServer;
+      if (this.servers.length > 0) {
+        this.selectedServer =
+          lastSelectedServer === void 0
+            ? this.selectServerOptions[0].value
+            : lastSelectedServer;
+        this.selectServer();
+      }
+    } catch (e) {
+      // eslint-disable-next-line
+      console.warn(`${errorMessage + " " + e.message}. Falling back to self-hosted at localhost.`)
+      this.setupSelfHosted(); // falls back to self-hosted in case config cannot be loaded or isn't found
+    }
   },
   methods: {
     getJson(url) {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.onload = () => {
@@ -201,12 +263,12 @@ export default {
         name: window.location.hostname,
         url: `${window.location.protocol}//${window.location.host}`,
         ws: `ws://${window.location.host}`,
-        docs: `${path}api.json`
+        docs: `${path}api.json`,
       };
       this.servers = [localhostInfo];
       this.selectServerByName(localhostInfo.name);
     },
-    selectServer: async function() {
+    selectServer: async function () {
       this.apiInfo = void 0;
       this.apiInfoErrorMessage = void 0;
       this.$root.$data.ClientMethodsService.clearAll();
@@ -286,81 +348,17 @@ export default {
       }
     },
     saveLocalServers() {
-      const localServers = this.servers.filter(s => s.origin === "local");
+      const localServers = this.servers.filter((s) => s.origin === "local");
       if (localServers.length > 0) {
         const localServersStr = JSON.stringify(
-          this.servers.filter(s => s.origin === "local")
+          this.servers.filter((s) => s.origin === "local")
         );
         localStorage.setItem("localServers", localServersStr);
       } else {
         localStorage.removeItem("localServers");
       }
-    }
-  },
-  computed: {
-    selectServerOptions: function() {
-      if (!this.servers) {
-        return [];
-      }
-
-      return this.servers.map(s => {
-        return {
-          value: s.name,
-          text: `${s.name} (${s.url})${s.origin === "local" ? " *" : ""}`
-        };
-      });
     },
-    selectedServerInfo: function() {
-      if (!this.selectedServer) {
-        return void 0;
-      }
-
-      const selectedServerInfo = this.servers.filter(
-        x => x.name === this.selectedServer
-      );
-      if (selectedServerInfo.length != 1) {
-        console.warn(
-          `None or more than 1 server with name ${this.selectedServer} were found. The server name must be unique.`
-        );
-        return void 0;
-      }
-
-      return selectedServerInfo[0];
-    },
-    allServerNames: function() {
-      return this.servers ? this.servers.map(s => s.name) : [];
-    }
   },
-  async mounted() {
-    this.apiInfo = void 0;
-
-    const configFile = "./config.json";
-    const errorMessage = `Failed to load configuration file from ${configFile}.`;
-    try {
-      const config = await this.getJson(configFile);
-      this.servers = config.servers.map(s => {
-        return { ...s, origin: "config" };
-      });
-
-      const localServers = this.getLocalServers();
-      if (localServers !== void 0) {
-        this.servers.push(...localServers);
-      }
-
-      const lastSelectedServer = localStorage.selectedServer;
-      if (this.servers.length > 0) {
-        this.selectedServer =
-          lastSelectedServer === void 0
-            ? this.selectServerOptions[0].value
-            : lastSelectedServer;
-        this.selectServer();
-      }
-    } catch (e) {
-      // eslint-disable-next-line
-      console.warn(`${errorMessage + " " + e.message}. Falling back to self-hosted at localhost.`)
-      this.setupSelfHosted(); // falls back to self-hosted in case config cannot be loaded or isn't found
-    }
-  }
 };
 </script>
 

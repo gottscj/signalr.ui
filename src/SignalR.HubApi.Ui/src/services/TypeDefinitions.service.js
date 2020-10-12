@@ -1,4 +1,6 @@
 export class TypeDefinitionsService {
+  apiInfo;
+
   pathRef = "#/";
   typeRef = "$ref";
   inheritanceProp = "allOf";
@@ -34,7 +36,7 @@ export class TypeDefinitionsService {
     const referencePath = reference.replace(this.pathRef, "");
     const pathParts = referencePath.split("/");
     let typeDefinition = null;
-    pathParts.forEach(p => {
+    pathParts.forEach((p) => {
       typeDefinition = typeDefinition ? typeDefinition[p] : definition[p];
       if (!typeDefinition) {
         throw new Error(
@@ -50,7 +52,7 @@ export class TypeDefinitionsService {
       typeDefinition = typeDefinition.allOf[1];
       typeDefinition.properties = {
         ...typeDefinition.properties,
-        ...inheritedProps
+        ...inheritedProps,
       };
     }
 

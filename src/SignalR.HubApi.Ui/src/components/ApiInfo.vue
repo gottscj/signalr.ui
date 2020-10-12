@@ -10,13 +10,15 @@
 
       <Contact
         v-if="!!info && !!info.contact"
-        v-bind:name="info.contact.name"
-        v-bind:email="info.contact.email"
-        v-bind:url="info.contact.url"
+        :name="info.contact.name"
+        :email="info.contact.email"
+        :url="info.contact.url"
       />
     </div>
 
-    <div class="api-description">{{ info.description }}</div>
+    <div class="api-description">
+      {{ info.description }}
+    </div>
   </div>
 </template>
 
@@ -26,7 +28,7 @@ import Contact from "./Contact";
 export default {
   name: "ApiInfo",
   components: {
-    Contact
+    Contact,
   },
   props: {
     info: {
@@ -36,11 +38,11 @@ export default {
       contact: {
         name: String,
         email: String,
-        url: String
+        url: String,
       },
-      hubApiEndpoint: String
-    }
-  }
+      hubApiEndpoint: String,
+    },
+  },
 };
 </script>
 

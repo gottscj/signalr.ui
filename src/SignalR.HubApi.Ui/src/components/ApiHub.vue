@@ -1,17 +1,23 @@
 <template>
   <div id="ApiHub">
     <button class="accordion" @click="toggleAccordion">
-      <div class="hub-color" v-bind:style="{ background: color }" />
-      <div class="hub-path">{{ hub.path }}</div>
-      <div class="hub-name">{{ hub.name }}</div>
-      <div class="hub-description">{{ hub.description }}</div>
-      <BBadge class="hub-online" v-if="this.connectionStatus === 'connected'">
+      <div class="hub-color" :style="{ background: color }" />
+      <div class="hub-path">
+        {{ hub.path }}
+      </div>
+      <div class="hub-name">
+        {{ hub.name }}
+      </div>
+      <div class="hub-description">
+        {{ hub.description }}
+      </div>
+      <BBadge v-if="this.connectionStatus === 'connected'" class="hub-online">
         {{ this.connectionStatus }}
       </BBadge>
       <BFormCheckbox
+        v-model="connectHub"
         class="hub-connection"
         switch
-        v-model="connectHub"
         size="lg"
       />
       <div v-if="expanded" class="hub-arrow">
@@ -21,37 +27,35 @@
         <img class="hub-arrow-icon" src="../assets/right-arrow.svg" />
       </div>
     </button>
-    <div class="panel" v-bind:style="{ display: panelDisplay }">
+    <div class="panel" :style="{ display: panelDisplay }">
       <div v-if="hub.methods.length > 0" class="hub-group">
-        <div class="hub-group-title">
-          Methods
-        </div>
-        <div v-for="method in hub.methods" v-bind:key="method.name">
+        <div class="hub-group-title">Methods</div>
+        <div v-for="method in hub.methods" :key="method.name">
           <ApiMethod
             class="hub-group-element"
-            v-bind:connection="connection"
-            v-bind:method="method"
+            :connection="connection"
+            :method="method"
           />
         </div>
       </div>
 
       <div v-if="hub.clientMethods.length > 0" class="hub-group">
         <div class="hub-group-title">
-          <BFormCheckbox switch v-model="enableAllClientMethods" size="lg">
+          <BFormCheckbox v-model="enableAllClientMethods" switch size="lg">
             Client Methods
           </BFormCheckbox>
         </div>
         <div
           v-for="(clientMethod, index) in hub.clientMethods"
-          v-bind:key="clientMethod.name"
+          :key="clientMethod.name"
         >
           <ApiClientMethod
-            class="hub-group-element"
-            v-bind:connection="connection"
-            v-bind:clientMethod="clientMethod"
-            v-bind:color="color"
-            v-bind:hubName="hub.name"
             v-model="clientMethodsState[index]"
+            class="hub-group-element"
+            :connection="connection"
+            :client-method="clientMethod"
+            :color="color"
+            :hub-name="hub.name"
           />
         </div>
       </div>
@@ -67,7 +71,7 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 
 const ConnectionStatus = {
   Connected: "connected",
-  Disconnected: "disconnected"
+  Disconnected: "disconnected",
 };
 
 export default {
@@ -76,9 +80,9 @@ export default {
     ApiMethod,
     ApiClientMethod,
     BBadge,
-    BFormCheckbox
+    BFormCheckbox,
   },
-  data: function() {
+  data: function () {
     return {
       expanded: true,
       panelDisplay: "block",
@@ -87,21 +91,21 @@ export default {
       connectionError: "",
       connection: void 0,
       clientMethodsState: [],
-      enableAllClientMethods: true
+      enableAllClientMethods: true,
     };
   },
   watch: {
-    enableAllClientMethods: function() {
+    enableAllClientMethods: function () {
       if (this.allClientMethodsEnabled != this.enableAllClientMethods) {
         this.clientMethodsState = Array(this.hub.clientMethods.length).fill(
           this.enableAllClientMethods
         );
       }
     },
-    allClientMethodsEnabled: function() {
+    allClientMethodsEnabled: function () {
       this.enableAllClientMethods = this.allClientMethodsEnabled;
     },
-    connectHub: function() {
+    connectHub: function () {
       if (
         (this.connectHub === true &&
           !this.connection &&
@@ -112,7 +116,7 @@ export default {
       ) {
         this.toggleHubConnection();
       }
-    }
+    },
   },
   props: {
     color: String,
@@ -122,8 +126,8 @@ export default {
       path: String,
       description: String,
       methods: [],
-      clientMethods: []
-    }
+      clientMethods: [],
+    },
   },
   created() {
     this.clientMethodsState = Array(this.hub.clientMethods.length).fill(
@@ -153,8 +157,8 @@ export default {
         this.connectionStatus = ConnectionStatus.Connected;
         this.connectHub = true;
 
-        this.connection.onclose(async error => {
-          if (!!error) {
+        this.connection.onclose(async (error) => {
+          if (error) {
             console.error(error);
           }
           this.connectionStatus = ConnectionStatus.Disconnected;
@@ -170,16 +174,16 @@ export default {
       this.connection = void 0;
       this.connectionStatus = ConnectionStatus.Disconnected;
       this.connectHub = false;
-    }
+    },
   },
   computed: {
-    hubPath: function() {
+    hubPath: function () {
       return this.serverInfo.url + this.hub.path;
     },
-    allClientMethodsEnabled: function() {
-      return this.clientMethodsState.every(x => x === true);
-    }
-  }
+    allClientMethodsEnabled: function () {
+      return this.clientMethodsState.every((x) => x === true);
+    },
+  },
 };
 </script>
 

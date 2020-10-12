@@ -3,8 +3,8 @@
     <div class="panel">
       <ClientMethodCard
         v-for="(note, index) in clientMethods"
-        v-bind:key="`note-${note.timestampStr()}-${index}`"
-        v-bind:clientMethod="note"
+        :key="`note-${note.timestampStr()}-${index}`"
+        :client-method="note"
       />
     </div>
   </div>
@@ -16,11 +16,11 @@ import ClientMethodCard from "./ClientMethodCard.vue";
 export default {
   name: "ClientMethodsPanel",
   components: {
-    ClientMethodCard
+    ClientMethodCard,
   },
   props: {
-    clientMethods: Array
-  }
+    clientMethods: Array,
+  },
 };
 </script>
 

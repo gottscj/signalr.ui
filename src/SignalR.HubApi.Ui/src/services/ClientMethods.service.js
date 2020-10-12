@@ -20,8 +20,8 @@ export class ClientMethodsService {
     setInterval(() => {
       this.clientMethods = [
         ...this.clientMethods.filter(
-          n => !n.isExpired(this.clientMethodTimeoutMs)
-        )
+          (n) => !n.isExpired(this.clientMethodTimeoutMs)
+        ),
       ];
     }, this.cleanUpIntervalMs);
   }
@@ -34,7 +34,7 @@ export class ClientMethodsService {
     const clientMethods = new ClientMethod(color, hubName, title, content);
     this.clientMethods = [
       clientMethods,
-      ...this.clientMethods.slice(0, this.maxClientMethods - 1)
+      ...this.clientMethods.slice(0, this.maxClientMethods - 1),
     ];
   }
 }

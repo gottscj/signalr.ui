@@ -10,7 +10,7 @@ export class ColorsService {
     "#2C5F2D",
     "#00539CFF",
     "#97BC62FF",
-    "#EEA47FFF"
+    "#EEA47FFF",
   ];
 
   getColor(index) {

@@ -19,8 +19,8 @@ describe("Contact", () => {
         propsData: {
           name: name,
           email: email,
-          url: url
-        }
+          url: url,
+        },
       });
     });
 
@@ -51,8 +51,8 @@ describe("Contact", () => {
       let sutWrapper = shallowMount(Contact, {
         propsData: {
           name: name,
-          email: email
-        }
+          email: email,
+        },
       });
 
       expect(sutWrapper.findAll(".contact-element").length).toBe(1);

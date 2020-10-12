@@ -1,10 +1,10 @@
 <template>
   <div id="ClientMethodPanelButton">
-    <BButton class="clientmethod-button" v-on:click="$emit('click')">
+    <BButton class="clientmethod-button" @click="$emit('click')">
       <img class="clientmethod-icon" src="../assets/clientmethod.svg" />
-      <BBadge class="clientmethod-count" v-if="numberOfClientMethods > 0">{{
-        numberOfClientMethods
-      }}</BBadge>
+      <BBadge v-if="numberOfClientMethods > 0" class="clientmethod-count">
+        {{ numberOfClientMethods }}
+      </BBadge>
     </BButton>
   </div>
 </template>
@@ -16,11 +16,12 @@ export default {
   name: "ClientMethodPanelButton",
   components: {
     BBadge,
-    BButton
+    BButton,
   },
   props: {
-    numberOfClientMethods: Number
-  }
+    numberOfClientMethods: Number,
+  },
+  emits: ["click"],
 };
 </script>
 

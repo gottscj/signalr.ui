@@ -1,15 +1,15 @@
 <template>
   <div id="ApiMethodParameters">
     <textarea
-      v-bind:class="
+      v-model="parametersJson"
+      :class="
         !jsonError
           ? 'method-parameters-code-ok'
           : 'method-parameters-code-error'
       "
-      v-model="parametersJson"
       placeholder="json parameters"
+      :rows="parametersCodeRows"
       @change="emitParametersChange"
-      v-bind:rows="parametersCodeRows"
     />
     <div v-if="!!jsonError" class="method-parameters-error">
       {{ jsonError }}
@@ -20,15 +20,16 @@
 <script>
 export default {
   name: "ApiMethodParameters",
-  data: function() {
+  props: {
+    parameters: Array,
+  },
+  emits: ["parameters-changed"],
+  data: function () {
     return {
       parametersJson: "",
       parametersCodeRows: 1,
-      jsonError: null
+      jsonError: null,
     };
-  },
-  props: {
-    parameters: Array
   },
   mounted() {
     this.parametersJson = this.createParametersJsonTemplate();
@@ -37,11 +38,11 @@ export default {
   methods: {
     createParametersJsonTemplate() {
       let parametersJsonArray = [];
-      this.parameters.forEach(param => {
+      this.parameters.forEach((param) => {
         parametersJsonArray.push({
           [param.name]: this.$root.$data.typeDefinitionsService.createDefaultObject(
             param.schema
-          )
+          ),
         });
       });
 
@@ -62,8 +63,8 @@ export default {
       }
 
       this.$emit("parameters-changed", paramJson);
-    }
-  }
+    },
+  },
 };
 </script>
 

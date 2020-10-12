@@ -13,7 +13,7 @@ describe("ColorService", () => {
       expect(sut.getColor(222)).toBeTruthy();
       expect(sut.getColor(234234)).toBeTruthy();
     });
-    
+
     it("should wrap around the available colors", () => {
       const amountOfColors = sut.serviceColors.length;
       expect(sut.getColor(0)).toEqual(sut.getColor(amountOfColors));
@@ -26,9 +26,9 @@ describe("ColorService", () => {
         colors.push(sut.getColor(i));
       }
 
-      const distinctColors = [...new Set(colors.map(x => x))];
+      const distinctColors = [...new Set(colors.map((x) => x))];
 
       expect(amountOfColors).toEqual(distinctColors.length);
-    })
-  })
-})
+    });
+  });
+});

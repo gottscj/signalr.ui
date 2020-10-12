@@ -52,7 +52,7 @@ describe("ClientMethodsService", () => {
   });
 
   describe("client method expired", () => {
-    it("should be removed", done => {
+    it("should be removed", (done) => {
       sut.add("#FFFFFF", "my-service", "my-title", "my-content");
       sut.add("#FFFFFF", "my-service", "my-title", "my-content");
 

@@ -1,22 +1,22 @@
 <template>
   <div id="ApiClientMethod">
     <div
-      v-bind:class="{
+      :class="{
         'accordion-expanded': expanded,
-        'accordion-collapsed': !expanded
+        'accordion-collapsed': !expanded,
       }"
     >
       <button
-        v-bind:class="{
+        :class="{
           'accordion-top-expanded': expanded,
-          'accordion-top-collapsed': !expanded
+          'accordion-top-collapsed': !expanded,
         }"
         @click="toggleAccordion"
       >
         <div
-          v-bind:class="{
+          :class="{
             'clientmethod-name-expanded': expanded,
-            'clientmethod-name-collapsed': !expanded
+            'clientmethod-name-collapsed': !expanded,
           }"
         >
           {{ clientMethod.name }}
@@ -24,11 +24,13 @@
         <div class="clientmethod-description">
           {{ clientMethod.description }}
         </div>
-        <BFormCheckbox class="clientmethod-enable" switch v-model="listening" />
+        <BFormCheckbox v-model="listening" class="clientmethod-enable" switch />
       </button>
       <div v-if="expanded" class="accordion-panel">
         <div class="clientmethod-subtitle">Parameters definition</div>
-        <div class="clientmethod-definition">{{ clientMethod.params }}</div>
+        <div class="clientmethod-definition">
+          {{ clientMethod.params }}
+        </div>
       </div>
     </div>
   </div>
@@ -41,38 +43,39 @@ import { HubConnection } from "@microsoft/signalr";
 export default {
   name: "ApiClientMethod",
   components: {
-    BFormCheckbox
-  },
-  data: function() {
-    return {
-      expanded: false,
-      listening: this.value
-    };
+    BFormCheckbox,
   },
   props: {
     value: {
-      type: Boolean
+      type: Boolean,
     },
     clientMethod: {
       name: String,
       description: String,
-      params: {}
+      params: {},
     },
     connection: HubConnection,
     color: String,
-    hubName: String
+    hubName: String,
+  },
+  emits: ["input"],
+  data: function () {
+    return {
+      expanded: false,
+      listening: this.value,
+    };
   },
   watch: {
-    connection: function() {
+    connection: function () {
       this.updateClientMethodListening();
     },
-    listening: function() {
+    listening: function () {
       this.updateClientMethodListening();
       this.$emit("input", this.listening);
     },
-    value: function() {
+    value: function () {
       this.listening = this.value;
-    }
+    },
   },
   methods: {
     toggleAccordion() {
@@ -81,7 +84,7 @@ export default {
     updateClientMethodListening() {
       if (this.connection) {
         if (this.listening) {
-          var func = eventArgs => {
+          var func = (eventArgs) => {
             this.$root.$data.ClientMethodsService.add(
               this.color,
               this.hubName,
@@ -89,15 +92,15 @@ export default {
               JSON.stringify(eventArgs, null, 2)
             );
           };
-          this.connection.on(this.clientMethod.name, function(eventArgs) {
+          this.connection.on(this.clientMethod.name, function (eventArgs) {
             func(eventArgs);
           });
         } else {
           this.connection.off(this.clientMethod.name);
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

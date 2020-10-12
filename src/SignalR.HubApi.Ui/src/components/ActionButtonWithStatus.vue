@@ -1,7 +1,9 @@
 <template>
   <div id="ActionButtonWithStatus">
     <template v-if="!enabled">
-      <div class="action-button-disabled">{{ text }}</div>
+      <div class="action-button-disabled">
+        {{ text }}
+      </div>
     </template>
     <template v-else>
       <a class="action-button" @click="$emit('click')">
@@ -31,17 +33,18 @@ export default {
   props: {
     enabled: {
       type: Boolean,
-      default: true
+      default: true,
     },
     text: String,
     hoverText: String,
     statusText: String,
     status: {
-      validator: function(value) {
+      validator: function (value) {
         return ["none", "loading", "ok", "error"].indexOf(value) !== -1;
-      }
-    }
-  }
+      },
+    },
+  },
+  emits: ["click"],
 };
 </script>
 
