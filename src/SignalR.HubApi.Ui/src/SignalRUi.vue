@@ -46,7 +46,7 @@
       v-bind:show="showAddServerDialog"
       v-bind:existingServerNames="allServerNames"
       v-on:close="showAddServerDialog = false"
-      v-on:addServer="addServer($event)"
+      v-on:add-server="addServer($event)"
     />
 
     <div v-if="apiInfo !== void 0">

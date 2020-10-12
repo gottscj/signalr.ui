@@ -28,7 +28,7 @@
         <div class="method-parameters">
           <ApiMethodParameters
             v-bind:parameters="method.params"
-            v-on:parametersChanged="onParametersChanged"
+            v-on:parameters-changed="onParametersChanged"
           />
           <ActionButtonWithStatus
             text="Try me!"

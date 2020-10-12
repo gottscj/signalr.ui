@@ -61,7 +61,7 @@ export default {
         return;
       }
 
-      this.$emit("parametersChanged", paramJson);
+      this.$emit("parameters-changed", paramJson);
     }
   }
 };

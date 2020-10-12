@@ -153,7 +153,7 @@ export default {
         return;
       }
 
-      this.$emit("addServer", {
+      this.$emit("add-server", {
         name: this.form.name,
         url: this.form.url,
         docs: this.form.docs
