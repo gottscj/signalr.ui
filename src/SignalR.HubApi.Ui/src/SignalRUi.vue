@@ -319,9 +319,10 @@ export default {
         x => x.name === this.selectedServer
       );
       if (selectedServerInfo.length != 1) {
-        throw new Error(
+        console.warn(
           `None or more than 1 server with name ${this.selectedServer} were found. The server name must be unique.`
         );
+        return void 0;
       }
 
       return selectedServerInfo[0];
