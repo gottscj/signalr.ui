@@ -61,8 +61,14 @@ namespace SignalR.HubApi.Sample
 
     public interface IChatClient
     {
+        /// <summary>
+        /// Welcomes a person to the chat
+        /// </summary>
         Task Welcome();
 
+        /// <summary>
+        /// Sends a message to the person
+        /// </summary>
         Task Send(string message);
     }
 }

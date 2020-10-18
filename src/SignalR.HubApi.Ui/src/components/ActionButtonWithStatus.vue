@@ -55,7 +55,7 @@ export default {
   vertical-align: middle;
   $height: 30px;
   $width: 100px;
-  $buttonColor: map-get($accent-color, 500);
+  $buttonColor: var(--action-button);
 
   .action-button {
     margin: 10px 0px 0px 0px;
@@ -95,11 +95,11 @@ export default {
     }
 
     .face-secondary {
-      background-color: map-get($accent-color, 50);
+      background-color: var(--action-button-hover);
     }
 
     .face-secondary:active {
-      background-color: map-get($accent-color, 100);
+      background-color: var(--action-button-click);
     }
 
     &:hover .face-primary {
@@ -139,12 +139,12 @@ export default {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: map-get($primary-color, 200);
+    color: var(--action-button-disabled);
     overflow: hidden;
     border-radius: 5px;
     line-height: $height;
-    border: 1px solid map-get($primary-color, 100);
-    background-color: map-get($primary-color, 50);
+    border: 1px solid var(--action-button-disabled-border);
+    background-color: var(--action-button-disabled-background);
 
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -158,8 +158,8 @@ export default {
   .action-button-spinner {
     vertical-align: middle;
     margin: 2px 0px 0px 0px;
-    border: 3px solid map-get($secondary-color, 800);
-    border-top: 3px solid map-get($accent-color, A700);
+    border: 3px solid var(--action-button-spinner-wheel);
+    border-top: 3px solid var(--action-button-spinner);
     border-radius: 50%;
     width: 20px;
     height: 20px;

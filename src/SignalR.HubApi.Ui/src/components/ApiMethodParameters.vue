@@ -72,9 +72,14 @@ export default {
 #ApiMethodParameters {
   font-size: 14px;
 
+  textarea:focus {
+    outline: none !important;
+    border: 1px solid var(--primary);
+  }
+
   .method-parameters-code-ok {
     width: 800px;
-    border-color: map-get($secondary-color, A200);
+    border-color: var(--method-response-box-ok-border);
   }
 
   .method-parameters-code-error {

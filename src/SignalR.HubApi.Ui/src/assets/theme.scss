@@ -57,9 +57,71 @@ $accent-color: (
     A700: #53ff91,
 );
 
+
+:root {
+    --base: #FFFFFF;
+    --background: #{var(--base)};
+    --primary: #{map-get($primary-color, 500)};
+    --primary-border: #{map-get($primary-color, 100)};
+
+    --error: red;
+    --success: #00c979;
+
+    --navbar-background: #{map-get($primary-color, 30)};
+
+    --api-version-background: #{map-get($secondary-color, 500)};
+
+    --apihub-background: #{map-get($primary-color, 30)};
+    --apihub-hub-online-badge: #{map-get($accent-color, 500)};
+    --apihub-hub-path-text: #{map-get($primary-color, 30)};
+    --apihub-hub-path-background: #{map-get($primary-color, 400)};
+
+    --method-name-text: #{var(--base)};
+    --method-background: #{map-get($secondary-color, 30)};
+    --method-description-text: #{map-get($primary-color, 500)};
+    --method-expanded-border: #{map-get($secondary-color, 400)};
+    --method-expanded-shadow: #{map-get($secondary-color, 100)};
+    --method-expanded-name-box: #{map-get($secondary-color, 800)};
+    --method-collapsed-border: #{map-get($secondary-color, A200)};
+    --method-collapsed-shadow: #{map-get($secondary-color, 50)};
+    --method-collapsed-name-box: #{map-get($secondary-color, 500)};
+    --method-subtitle-text: #{map-get($primary-color, 900)};
+    --method-subtitle-background: #{map-get($secondary-color, 50)};
+    --method-response-box-ok-border: #{map-get($secondary-color, A200)};
+
+    --client-method-name-text: #{var(--base)};
+    --client-method-background: #{map-get($accent-color, 30)};
+    --client-method-description-text: #{map-get($primary-color, 500)};
+    --client-method-expanded-border: #{map-get($accent-color, 400)};
+    --client-method-expanded-shadow: #{map-get($accent-color, 100)};
+    --client-method-expanded-name-box: #{map-get($accent-color, 700)};
+    --client-method-collapsed-border: #{map-get($accent-color, 300)};
+    --client-method-collapsed-shadow: #{map-get($accent-color, 50)};
+    --client-method-collapsed-name-box: #{map-get($accent-color, 400)};
+    --client-method-subtitle-text: #{map-get($primary-color, 700)};
+    --client-method-subtitle-background: #{map-get($accent-color, 50)};
+    --client-method-definition-text: #{map-get($primary-color, 900)};
+
+    --client-method-count-badge-background: #{map-get($accent-color, 200)};
+    --client-method-card-timestamp-background: #{map-get($accent-color, 100)};
+
+    --action-button: #{map-get($accent-color, 500)};
+    --action-button-hover: #{map-get($accent-color, 50)};
+    --action-button-click: #{map-get($accent-color, 100)};
+    --action-button-disabled: #{map-get($primary-color, 200)};
+    --action-button-disabled-border: #{map-get($primary-color, 100)};
+    --action-button-disabled-background: #{map-get($primary-color, 50)};
+    --action-button-spinner: #{map-get($accent-color, A700)};
+    --action-button-spinner-wheel: #{map-get($secondary-color, 800)};
+}
+
+[theme="dark"] {
+    --background: #252525;
+}
+
 // bootstrap
 $theme-colors: (
-  'primary': map-get($primary-color, 500),
+  'primary': #515151,
 );
 @import '../../node_modules/bootstrap/scss/bootstrap';
 @import '../../node_modules/bootstrap-vue/src/index.scss';

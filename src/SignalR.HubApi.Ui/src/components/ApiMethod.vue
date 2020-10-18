@@ -150,7 +150,7 @@ export default {
           this.hubResponseOk = null;
           clearTimeout(timeout);
           this.callInProgress = false;
-          this.callStatus = "ok";
+          this.callStatus = "error";
         });
     },
     processMethodParameters(parametersJson) {
@@ -171,7 +171,12 @@ export default {
 
 <style scoped lang="scss">
 #ApiMethod {
-  color: map-get($primary-color, 400);
+  color: var(--method-description-text);
+
+  textarea:focus {
+    outline: none !important;
+    border: 1px solid var(--primary);
+  }
 
   .accordion-collapsed {
     transition: all 0.2s linear;
@@ -185,7 +190,7 @@ export default {
 
   .accordion-top {
     font-family: inherit;
-    background-color: map-get($secondary-color, 30);
+    background-color: var(--method-background);
     color: inherit;
     cursor: pointer;
     padding: 5px;
@@ -201,35 +206,35 @@ export default {
   .accordion-top-expanded {
     @extend .accordion-top;
     border-radius: 5px 5px 0px 0px;
-    border-color: map-get($secondary-color, 400);
-    box-shadow: 3px 3px 3px 0 map-get($secondary-color, 100),
-      3px 3px 3px 0 map-get($secondary-color, 100);
+    border-color: var(--method-expanded-border);
+    box-shadow: 3px 3px 3px 0 var(--method-expanded-shadow),
+      3px 3px 3px 0 var(--method-expanded-shadow);
   }
 
   .accordion-top-collapsed {
     @extend .accordion-top;
     border-radius: 5px;
-    border-color: map-get($secondary-color, A200);
-    box-shadow: 2px 2px 2px 0 map-get($secondary-color, 50),
-      2px 2px 2px 0 map-get($secondary-color, 50);
+    border-color: var(--method-collapsed-border);
+    box-shadow: 2px 2px 2px 0 var(--method-collapsed-shadow),
+      2px 2px 2px 0 var(--method-collapsed-shadow);
   }
 
   .accordion-panel {
     font-family: inherit;
     display: block;
-    background-color: map-get($secondary-color, 30);
+    background-color: var(--method-background);
     overflow: hidden;
     border-radius: 0px 0px 5px 5px;
     border-style: solid;
-    border-color: map-get($secondary-color, 400);
+    border-color: var(--method-expanded-border);
     border-width: 1px;
     border-top: none;
-    box-shadow: 3px 3px 3px 0 map-get($secondary-color, 100),
-      3px 3px 3px 0 map-get($secondary-color, 100);
+    box-shadow: 3px 3px 3px 0 var(--method-expanded-shadow),
+      3px 3px 3px 0 var(--method-expanded-shadow);
   }
 
   .method-name {
-    color: $light-text;
+    color: var(--method-name-text);
     font-size: 15px;
     padding: 7px;
     margin-right: 10px;
@@ -240,14 +245,14 @@ export default {
 
   .method-name-expanded {
     @extend .method-name;
-    border-color: map-get($secondary-color, 800);
-    background-color: map-get($secondary-color, 800);
+    border-color: var(--method-expanded-name-box);
+    background-color: var(--method-expanded-name-box);
   }
 
   .method-name-collapsed {
     @extend .method-name;
-    border-color: map-get($secondary-color, 500);
-    background-color: map-get($secondary-color, 500);
+    border-color: var(--method-collapsed-name-box);
+    background-color: var(--method-collapsed-name-box);
   }
 
   .method-description {
@@ -257,8 +262,8 @@ export default {
   .method-subtitle {
     padding: 10px;
     font-size: 14px;
-    color: map-get($primary-color, 900);
-    background: map-get($secondary-color, 50);
+    color: var(--method-subtitle-text);
+    background: var(--method-subtitle-background);
   }
 
   .method-parameters {
@@ -272,14 +277,14 @@ export default {
   .hub-response-error {
     width: 800px;
     font-size: 14px;
-    border-color: $error-color;
-    color: $error-color;
+    border-color: var(--error);
+    color: var(--error);
   }
 
   .hub-response-ok {
     width: 800px;
     font-size: 14px;
-    border-color: map-get($secondary-color, A200);
+    border-color: var(--method-response-box-ok-border);
   }
 }
 </style>

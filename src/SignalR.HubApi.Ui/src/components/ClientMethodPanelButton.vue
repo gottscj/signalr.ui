@@ -1,7 +1,12 @@
 <template>
   <div id="ClientMethodPanelButton">
     <BButton class="clientmethod-button" @click="$emit('click')">
-      <img class="clientmethod-icon" src="../assets/clientmethod.svg" />
+      <b-icon
+        class="clientmethod-icon"
+        icon="chat-right-dots"
+        font-scale="2"
+        aria-hidden="true"
+      />
       <BBadge v-if="numberOfClientMethods > 0" class="clientmethod-count">
         {{ numberOfClientMethods }}
       </BBadge>
@@ -10,13 +15,14 @@
 </template>
 
 <script>
-import { BButton, BBadge } from "bootstrap-vue";
+import { BButton, BBadge, BIcon } from "bootstrap-vue";
 
 export default {
   name: "ClientMethodPanelButton",
   components: {
     BBadge,
     BButton,
+    BIcon,
   },
   props: {
     numberOfClientMethods: Number,
@@ -43,12 +49,12 @@ export default {
   }
 
   .clientmethod-icon {
-    height: 35px;
+    color: var(--primary);
   }
 
   .clientmethod-count {
-    background-color: map-get($accent-color, 200);
-    color: map-get($primary-color, 900);
+    background-color: var(--client-method-count-badge-background);
+    color: var(--primary);
     border-radius: 50px;
     position: absolute;
     top: 0px;

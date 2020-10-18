@@ -37,6 +37,10 @@
           </BInputGroupAppend>
         </BInputGroup>
       </BNavbarNav>
+
+      <BNavbarNav>
+        <ThemeToggleButton />
+      </BNavbarNav>
     </BNavbar>
 
     <AddServerFormDialog
@@ -114,6 +118,7 @@ import { TypeDefinitionsService } from "./services/TypeDefinitions.service";
 import { ColorsService } from "./services/Colors.service";
 import AddServerFormDialog from "./components/AddServerFormDialog";
 import { Validator } from "jsonschema";
+import ThemeToggleButton from "./components/ThemeToggleButton";
 
 export default {
   name: "SignalRUi",
@@ -132,6 +137,7 @@ export default {
     ClientMethodsPanel,
     ClientMethodPanelButton,
     SearchBox,
+    ThemeToggleButton,
   },
   data: function () {
     return {
@@ -306,9 +312,6 @@ export default {
         }`;
       }
     },
-    toggleClientMethodsPanel() {
-      this.showClientMethods = !this.showClientMethods;
-    },
     addServer(server) {
       server.origin = "local";
       this.servers.push(server);
@@ -368,6 +371,14 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  // .custom-select {
+  //   background-color: gray;
+  // }
+
+  // .custom-control-label::before {
+  //   background-color: gray;
+  // }
+
   .logo {
     height: 32px;
     opacity: 0.9;
@@ -382,14 +393,16 @@ export default {
   }
 
   .left {
+    background: var(--background);
     width: 80%;
     left: 0;
     transition: width 0.2s;
   }
 
   .right {
+    background: var(--background);
     width: 20%;
-    border-left: 1px solid map-get($primary-color, 200);
+    border-left: 1px solid var(--primary-border);
     right: 0;
     transition: width 0.2s;
   }
@@ -404,13 +417,13 @@ export default {
   }
 
   .navBar {
-    background: map-get($primary-color, 30);
-    border-bottom: 1px solid map-get($primary-color, 100);
+    background: var(--navbar-background);
+    border-bottom: 1px solid var(--primary-border);
     height: 45px;
 
     .navBarTitle {
       font-size: 20px;
-      color: map-get($primary-color, 500);
+      color: var(--primary);
     }
   }
 

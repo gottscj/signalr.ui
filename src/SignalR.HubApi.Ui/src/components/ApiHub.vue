@@ -21,10 +21,14 @@
         size="lg"
       />
       <div v-if="expanded" class="hub-arrow">
-        <img class="hub-arrow-icon" src="../assets/down-arrow.svg" />
+        <b-icon class="hub-arrow-icon" icon="chevron-down" aria-hidden="true" />
       </div>
       <div v-else class="hub-arrow">
-        <img class="hub-arrow-icon" src="../assets/right-arrow.svg" />
+        <b-icon
+          class="hub-arrow-icon"
+          icon="chevron-right"
+          aria-hidden="true"
+        />
       </div>
     </button>
     <div class="panel" :style="{ display: panelDisplay }">
@@ -66,7 +70,7 @@
 <script>
 import ApiMethod from "./ApiMethod.vue";
 import ApiClientMethod from "./ApiClientMethod.vue";
-import { BBadge, BFormCheckbox } from "bootstrap-vue";
+import { BBadge, BFormCheckbox, BIcon } from "bootstrap-vue";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 const ConnectionStatus = {
@@ -81,6 +85,7 @@ export default {
     ApiClientMethod,
     BBadge,
     BFormCheckbox,
+    BIcon,
   },
   data: function () {
     return {
@@ -189,14 +194,14 @@ export default {
 
 <style scoped lang="scss">
 #ApiHub {
-  color: map-get($primary-color, 400);
+  color: var(--primary);
   min-width: 600px;
   margin-bottom: 20px;
 
   .accordion {
     padding: 0px;
     font-family: inherit;
-    background-color: map-get($primary-color, 30);
+    background-color: var(--apihub-background);
     color: inherit;
     cursor: pointer;
     height: 60px;
@@ -208,7 +213,7 @@ export default {
     font-size: 15px;
     transition: 0.4s;
     display: flex;
-    border-bottom: 1px solid map-get($primary-color, 100);
+    border-bottom: 1px solid var(--primary-border);
     border-radius: 7px 0px 0px 7px;
   }
 
@@ -233,7 +238,7 @@ export default {
   .hub-online {
     text-align: center;
     margin: 20px 0px 0px 20px;
-    background-color: map-get($accent-color, 500);
+    background-color: var(--apihub-hub-online-badge);
   }
 
   .hub-name {
@@ -254,15 +259,15 @@ export default {
   }
 
   .hub-path {
-    color: map-get($primary-color, 30);
-    background-color: map-get($primary-color, 400);
+    color: var(--apihub-hub-path-text);
+    background-color: var(--apihub-hub-path-background);
     font-size: 15px;
     margin-top: 10px;
     margin-left: 10px;
     padding: 7px;
     border-radius: 5px;
     border-style: solid;
-    border-color: map-get($primary-color, 400);
+    border-color: var(--apihub-hub-path-background);
     border-width: 1px;
   }
 
@@ -274,9 +279,8 @@ export default {
   }
 
   .hub-arrow-icon {
-    height: 40px;
-    line-height: 60px;
-    height: 15px;
+    color: var(--primary);
+    font-weight: bold;
   }
 
   .hub-group {

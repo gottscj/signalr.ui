@@ -129,8 +129,8 @@ export default {
   .clientmethod-card {
     display: flex;
     height: 40px;
-    background-color: map-get($accent-color, 30);
-    color: inherit;
+    background-color: var(--client-method-background);
+    color: var(--primary);
     cursor: pointer;
     width: 100%;
     text-align: left;
@@ -139,7 +139,7 @@ export default {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px 5px 5px 5px;
-    border-color: map-get($accent-color, 400);
+    border-color: var(--client-method-expanded-border);
     transition: opacity 2s;
   }
 
@@ -153,7 +153,7 @@ export default {
   .clientmethod-fullcard-title {
     @extend .clientmethod-card;
     cursor: default;
-    background-color: map-get($accent-color, 400);
+    background-color: var(--client-method-expanded-border);
     font-size: 14px;
     border-radius: 5px 5px 0px 0px;
     margin-top: 0px;
@@ -177,7 +177,7 @@ export default {
   .clientmethod-fullcard-content pre {
     margin: 0px;
     font-size: 14px;
-    color: map-get($primary-color, 900);
+    color: var(--primary);
   }
 
   .clientmethod-timestamp {
@@ -186,8 +186,8 @@ export default {
     margin-left: auto;
     //float: right;
     height: 20px;
-    background-color: map-get($accent-color, 100);
-    color: map-get($primary-color, 900);
+    background-color: var(--client-method-card-timestamp-background);
+    color: var(--primary);
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 3px 3px 3px 3px;
@@ -196,12 +196,12 @@ export default {
   .progress {
     margin: -1px 3px 0px 3px;
     height: 1px;
-    background-color: map-get($accent-color, 30);
+    background-color: var(--client-method-background);
   }
 
   .progressbar {
     width: 100%;
-    background-color: map-get($accent-color, 400);
+    background-color: var(--client-method-expanded-border);
     transition: width 5s;
   }
 }

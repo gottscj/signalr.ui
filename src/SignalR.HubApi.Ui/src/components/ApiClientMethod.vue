@@ -106,7 +106,7 @@ export default {
 
 <style scoped lang="scss">
 #ApiClientMethod {
-  color: map-get($primary-color, 400);
+  color: var(--client-method-description-text);
 
   .accordion-collapsed {
     transition: all 0.2s linear;
@@ -120,7 +120,7 @@ export default {
 
   .accordion-top {
     font-family: inherit;
-    background-color: map-get($accent-color, 30);
+    background-color: var(--client-method-background);
     color: inherit;
     cursor: pointer;
     padding: 5px;
@@ -136,35 +136,35 @@ export default {
   .accordion-top-expanded {
     @extend .accordion-top;
     border-radius: 5px 5px 0px 0px;
-    border-color: map-get($accent-color, 400);
-    box-shadow: 3px 3px 3px 0 map-get($accent-color, 100),
-      3px 3px 3px 0 map-get($accent-color, 100);
+    border-color: var(--client-method-expanded-border);
+    box-shadow: 3px 3px 3px 0 var(--client-method-expanded-shadow),
+      3px 3px 3px 0 var(--client-method-expanded-shadow);
   }
 
   .accordion-top-collapsed {
     @extend .accordion-top;
     border-radius: 5px;
-    border-color: map-get($accent-color, 300);
-    box-shadow: 2px 2px 2px 0 map-get($accent-color, 50),
-      2px 2px 2px 0 map-get($accent-color, 50);
+    border-color: var(--client-method-collapsed-border);
+    box-shadow: 2px 2px 2px 0 var(--client-method-collapsed-shadow),
+      2px 2px 2px 0 var(--client-method-collapsed-shadow);
   }
 
   .accordion-panel {
     font-family: inherit;
     display: block;
-    background-color: map-get($accent-color, 30);
+    background-color: var(--client-method-background);
     overflow: hidden;
     border-radius: 0px 0px 5px 5px;
     border-style: solid;
-    border-color: map-get($accent-color, 400);
+    border-color: var(--client-method-expanded-border);
     border-width: 1px;
     border-top: none;
-    box-shadow: 3px 3px 3px 0 map-get($accent-color, 100),
-      3px 3px 3px 0 map-get($accent-color, 100);
+    box-shadow: 3px 3px 3px 0 var(--client-method-expanded-shadow),
+      3px 3px 3px 0 var(--client-method-expanded-shadow);
   }
 
   .clientmethod-name {
-    color: $light-text;
+    color: var(--client-method-name-text);
     font-size: 15px;
     padding: 7px;
     margin-right: 10px;
@@ -175,14 +175,14 @@ export default {
 
   .clientmethod-name-expanded {
     @extend .clientmethod-name;
-    border-color: map-get($accent-color, 700);
-    background-color: map-get($accent-color, 700);
+    border-color: var(--client-method-expanded-name-box);
+    background-color: var(--client-method-expanded-name-box);
   }
 
   .clientmethod-name-collapsed {
     @extend .clientmethod-name;
-    border-color: map-get($accent-color, 400);
-    background-color: map-get($accent-color, 400);
+    border-color: var(--client-method-collapsed-name-box);
+    background-color: var(--client-method-collapsed-name-box);
   }
 
   .clientmethod-description {
@@ -198,15 +198,15 @@ export default {
   .clientmethod-subtitle {
     padding: 10px;
     font-size: 14px;
-    color: map-get($primary-color, 900);
-    background: map-get($accent-color, 50);
+    color: var(--client-method-subtitle-text);
+    background: var(--client-method-subtitle-background);
   }
 
   .clientmethod-definition {
     margin: 10px;
     font-size: 14px;
     white-space: pre-wrap;
-    color: map-get($primary-color, 900);
+    color: var(--client-method-definition-text);
   }
 }
 </style>

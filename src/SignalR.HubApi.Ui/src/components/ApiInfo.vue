@@ -6,7 +6,7 @@
     </div>
 
     <div class="detailed-info">
-      <div class="api-endpoint">Endpoint: {{ info.jsonRpcApiEndpoint }}</div>
+      <div class="api-endpoint">Endpoint: {{ info.hubApiEndpoint }}</div>
 
       <Contact
         v-if="!!info && !!info.contact"
@@ -51,7 +51,7 @@ export default {
   margin-bottom: 30px;
 
   .api-title {
-    color: map-get($primary-color, 500);
+    color: var(--primary);
     font-size: 36px;
     font-weight: bold;
 
@@ -64,7 +64,7 @@ export default {
       padding: 2px 8px;
       vertical-align: super;
       border-radius: 57px;
-      background: map-get($secondary-color, 500);
+      background: var(--api-version-background);
 
       pre {
         margin: 0;
@@ -80,7 +80,7 @@ export default {
     font-weight: 300 !important;
     margin: 0;
     font-weight: 600;
-    color: map-get($primary-color, 400);
+    color: var(--primary);
   }
 
   .api-description {
@@ -91,7 +91,7 @@ export default {
   .detailed-info {
     margin-left: 10px;
     padding-left: 10px;
-    border-left: 2px solid map-get($primary-color, 100);
+    border-left: 2px solid var(--primary-border);
   }
 }
 </style>
