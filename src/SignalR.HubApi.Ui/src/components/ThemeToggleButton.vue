@@ -70,6 +70,6 @@ button:focus {
 }
 
 .theme-toggle-button-icon {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 </style>

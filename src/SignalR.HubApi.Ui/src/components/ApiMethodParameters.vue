@@ -72,9 +72,14 @@ export default {
 #ApiMethodParameters {
   font-size: 14px;
 
+  textarea {
+    color: var(--primary-text);
+    background: var(--background);
+  }
+
   textarea:focus {
     outline: none !important;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-text);
   }
 
   .method-parameters-code-ok {

@@ -137,16 +137,12 @@ export default {
     @extend .accordion-top;
     border-radius: 5px 5px 0px 0px;
     border-color: var(--client-method-expanded-border);
-    box-shadow: 3px 3px 3px 0 var(--client-method-expanded-shadow),
-      3px 3px 3px 0 var(--client-method-expanded-shadow);
   }
 
   .accordion-top-collapsed {
     @extend .accordion-top;
     border-radius: 5px;
     border-color: var(--client-method-collapsed-border);
-    box-shadow: 2px 2px 2px 0 var(--client-method-collapsed-shadow),
-      2px 2px 2px 0 var(--client-method-collapsed-shadow);
   }
 
   .accordion-panel {
@@ -159,8 +155,6 @@ export default {
     border-color: var(--client-method-expanded-border);
     border-width: 1px;
     border-top: none;
-    box-shadow: 3px 3px 3px 0 var(--client-method-expanded-shadow),
-      3px 3px 3px 0 var(--client-method-expanded-shadow);
   }
 
   .clientmethod-name {

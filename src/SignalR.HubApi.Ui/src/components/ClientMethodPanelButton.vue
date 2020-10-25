@@ -49,12 +49,12 @@ export default {
   }
 
   .clientmethod-icon {
-    color: var(--primary);
+    color: var(--primary-text);
   }
 
   .clientmethod-count {
     background-color: var(--client-method-count-badge-background);
-    color: var(--primary);
+    color: var(--primary-text);
     border-radius: 50px;
     position: absolute;
     top: 0px;

@@ -130,7 +130,7 @@ export default {
     display: flex;
     height: 40px;
     background-color: var(--client-method-background);
-    color: var(--primary);
+    color: var(--primary-text);
     cursor: pointer;
     width: 100%;
     text-align: left;
@@ -177,7 +177,7 @@ export default {
   .clientmethod-fullcard-content pre {
     margin: 0px;
     font-size: 14px;
-    color: var(--primary);
+    color: var(--primary-text);
   }
 
   .clientmethod-timestamp {
@@ -187,7 +187,7 @@ export default {
     //float: right;
     height: 20px;
     background-color: var(--client-method-card-timestamp-background);
-    color: var(--primary);
+    color: var(--primary-text);
     padding-left: 4px;
     padding-right: 4px;
     border-radius: 3px 3px 3px 3px;
@@ -196,12 +196,12 @@ export default {
   .progress {
     margin: -1px 3px 0px 3px;
     height: 1px;
-    background-color: var(--client-method-background);
+    background-color: var(--client-method-card-progress-background);
   }
 
   .progressbar {
     width: 100%;
-    background-color: var(--client-method-expanded-border);
+    background-color: var(--client-method-card-progress-bar-background);
     transition: width 5s;
   }
 }

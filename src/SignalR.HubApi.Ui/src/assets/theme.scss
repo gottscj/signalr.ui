@@ -61,18 +61,22 @@ $accent-color: (
 :root {
     --base: #FFFFFF;
     --background: #{var(--base)};
-    --primary: #{map-get($primary-color, 500)};
+    --primary-text: #{map-get($primary-color, 500)};
     --primary-border: #{map-get($primary-color, 100)};
 
     --error: red;
     --success: #00c979;
+
+    --switch-button-off-background: #{map-get($primary-color, 30)};
+    --switch-button-on-background: #{map-get($primary-color, 500)};
 
     --navbar-background: #{map-get($primary-color, 30)};
 
     --api-version-background: #{map-get($secondary-color, 500)};
 
     --apihub-background: #{map-get($primary-color, 30)};
-    --apihub-hub-online-badge: #{map-get($accent-color, 500)};
+    --apihub-hub-online-badge-text: #{map-get($primary-color, 30)};
+    --apihub-hub-online-badge-background: #{map-get($accent-color, 500)};
     --apihub-hub-path-text: #{map-get($primary-color, 30)};
     --apihub-hub-path-background: #{map-get($primary-color, 400)};
 
@@ -80,10 +84,8 @@ $accent-color: (
     --method-background: #{map-get($secondary-color, 30)};
     --method-description-text: #{map-get($primary-color, 500)};
     --method-expanded-border: #{map-get($secondary-color, 400)};
-    --method-expanded-shadow: #{map-get($secondary-color, 100)};
     --method-expanded-name-box: #{map-get($secondary-color, 800)};
     --method-collapsed-border: #{map-get($secondary-color, A200)};
-    --method-collapsed-shadow: #{map-get($secondary-color, 50)};
     --method-collapsed-name-box: #{map-get($secondary-color, 500)};
     --method-subtitle-text: #{map-get($primary-color, 900)};
     --method-subtitle-background: #{map-get($secondary-color, 50)};
@@ -93,10 +95,8 @@ $accent-color: (
     --client-method-background: #{map-get($accent-color, 30)};
     --client-method-description-text: #{map-get($primary-color, 500)};
     --client-method-expanded-border: #{map-get($accent-color, 400)};
-    --client-method-expanded-shadow: #{map-get($accent-color, 100)};
     --client-method-expanded-name-box: #{map-get($accent-color, 700)};
     --client-method-collapsed-border: #{map-get($accent-color, 300)};
-    --client-method-collapsed-shadow: #{map-get($accent-color, 50)};
     --client-method-collapsed-name-box: #{map-get($accent-color, 400)};
     --client-method-subtitle-text: #{map-get($primary-color, 700)};
     --client-method-subtitle-background: #{map-get($accent-color, 50)};
@@ -104,6 +104,8 @@ $accent-color: (
 
     --client-method-count-badge-background: #{map-get($accent-color, 200)};
     --client-method-card-timestamp-background: #{map-get($accent-color, 100)};
+    --client-method-card-progress-background: #{map-get($accent-color, 30)};
+    --client-method-card-progress-bar-background: #{map-get($accent-color, 400)};
 
     --action-button: #{map-get($accent-color, 500)};
     --action-button-hover: #{map-get($accent-color, 50)};
@@ -116,12 +118,64 @@ $accent-color: (
 }
 
 [theme="dark"] {
-    --background: #252525;
+    --base: #252525;
+    --background: #{var(--base)};
+    --primary-text: #{map-get($primary-color, 30)};
+    --primary-border: #{map-get($primary-color, 400)};
+
+    --error: red;
+    --success: #00c979;
+
+    --navbar-background: #{map-get($primary-color, 500)};
+
+    --api-version-background: #{map-get($secondary-color, 500)};
+
+    --apihub-background: #{map-get($primary-color, 500)};
+    --apihub-hub-online-badge-text: #{map-get($primary-color, 500)};
+    --apihub-hub-online-badge-background: #{map-get($accent-color, 500)};
+    --apihub-hub-path-text: #{map-get($primary-color, 30)};
+    --apihub-hub-path-background: #{map-get($primary-color, 400)};
+
+    --method-name-text: #{map-get($primary-color, 30)};
+    --method-background: #{rgba(map-get($secondary-color, 800), 0.5)};
+    --method-description-text: #{map-get($primary-color, 30)};
+    --method-expanded-border: #{map-get($secondary-color, 400)};
+    --method-expanded-name-box: #{map-get($secondary-color, 400)};
+    --method-collapsed-border: #{map-get($secondary-color, 500)};
+    --method-collapsed-name-box: #{map-get($secondary-color, 500)};
+    --method-subtitle-text: #{map-get($primary-color, 50)};
+    --method-subtitle-background: #{rgba(map-get($secondary-color, 900), 0.5)};
+    --method-response-box-ok-border: #{map-get($secondary-color, 800)};
+
+    --client-method-name-text: #{map-get($primary-color, 30)};
+    --client-method-background: #{rgba(map-get($accent-color, 800), 0.6)};
+    --client-method-description-text: #{map-get($primary-color, 30)};
+    --client-method-expanded-border: #{map-get($accent-color, 400)};
+    --client-method-expanded-name-box: #{map-get($accent-color, 400)};
+    --client-method-collapsed-border: #{map-get($accent-color, 600)};
+    --client-method-collapsed-name-box: #{map-get($accent-color, 600)};
+    --client-method-subtitle-text: #{map-get($primary-color, 50)};
+    --client-method-subtitle-background: #{rgba(map-get($accent-color, 900), 0.5)};
+    --client-method-definition-text: #{map-get($primary-color, 50)};
+
+    --client-method-count-badge-background: #{map-get($accent-color, 600)};
+    --client-method-card-timestamp-background: #{map-get($accent-color, 600)};
+    --client-method-card-progress-background: #{var(--base)};
+    --client-method-card-progress-bar-background: #{map-get($accent-color, 400)};
+
+    --action-button: #{map-get($accent-color, 500)};
+    --action-button-hover: #{map-get($accent-color, 50)};
+    --action-button-click: #{map-get($accent-color, 100)};
+    --action-button-disabled: #{map-get($primary-color, 200)};
+    --action-button-disabled-border: #{map-get($primary-color, 100)};
+    --action-button-disabled-background: #{map-get($primary-color, 50)};
+    --action-button-spinner: #{map-get($accent-color, A700)};
+    --action-button-spinner-wheel: #{map-get($secondary-color, 800)};
 }
 
 // bootstrap
 $theme-colors: (
-  'primary': #515151,
+  'primary': #858585
 );
 @import '../../node_modules/bootstrap/scss/bootstrap';
 @import '../../node_modules/bootstrap-vue/src/index.scss';
@@ -143,5 +197,5 @@ $theme-colors: (
     background: rgba(44, 44, 44, 0.1); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-    background: rgba(255,255,255,0.5); 
+    background: rgba(255, 255, 255, 0.5); 
 }

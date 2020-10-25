@@ -194,7 +194,7 @@ export default {
 
 <style scoped lang="scss">
 #ApiHub {
-  color: var(--primary);
+  color: var(--primary-text);
   min-width: 600px;
   margin-bottom: 20px;
 
@@ -238,7 +238,8 @@ export default {
   .hub-online {
     text-align: center;
     margin: 20px 0px 0px 20px;
-    background-color: var(--apihub-hub-online-badge);
+    color: var(--apihub-hub-online-badge-text);
+    background-color: var(--apihub-hub-online-badge-background);
   }
 
   .hub-name {
@@ -279,7 +280,7 @@ export default {
   }
 
   .hub-arrow-icon {
-    color: var(--primary);
+    color: var(--primary-text);
     font-weight: bold;
   }
 

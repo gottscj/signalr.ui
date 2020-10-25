@@ -173,9 +173,14 @@ export default {
 #ApiMethod {
   color: var(--method-description-text);
 
+  textarea {
+    color: var(--primary-text);
+    background: var(--background);
+  }
+
   textarea:focus {
     outline: none !important;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-text);
   }
 
   .accordion-collapsed {
@@ -207,16 +212,12 @@ export default {
     @extend .accordion-top;
     border-radius: 5px 5px 0px 0px;
     border-color: var(--method-expanded-border);
-    box-shadow: 3px 3px 3px 0 var(--method-expanded-shadow),
-      3px 3px 3px 0 var(--method-expanded-shadow);
   }
 
   .accordion-top-collapsed {
     @extend .accordion-top;
     border-radius: 5px;
     border-color: var(--method-collapsed-border);
-    box-shadow: 2px 2px 2px 0 var(--method-collapsed-shadow),
-      2px 2px 2px 0 var(--method-collapsed-shadow);
   }
 
   .accordion-panel {
@@ -229,8 +230,6 @@ export default {
     border-color: var(--method-expanded-border);
     border-width: 1px;
     border-top: none;
-    box-shadow: 3px 3px 3px 0 var(--method-expanded-shadow),
-      3px 3px 3px 0 var(--method-expanded-shadow);
   }
 
   .method-name {

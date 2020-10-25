@@ -28,10 +28,10 @@ export default {
 <style lang="scss" scoped>
 #Contact {
   font-size: 12px;
-  color: var(--primary);
+  color: var(--primary-text);
 
   .contact-element {
-    color: var(--primary);
+    color: var(--primary-text);
   }
 }
 </style>

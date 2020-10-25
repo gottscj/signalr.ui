@@ -371,13 +371,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  // .custom-select {
-  //   background-color: gray;
-  // }
+  .input-group-text {
+    color: var(--primary-text);
+    background-color: var(--navbar-background);
+    border-color: var(--primary-border);
+  }
 
-  // .custom-control-label::before {
-  //   background-color: gray;
-  // }
+  .custom-select {
+    color: var(--primary-text);
+    background-color: var(--background);
+    border-color: var(--primary-border);
+  }
 
   .logo {
     height: 32px;
@@ -423,7 +427,7 @@ export default {
 
     .navBarTitle {
       font-size: 20px;
-      color: var(--primary);
+      color: var(--primary-text);
     }
   }
 

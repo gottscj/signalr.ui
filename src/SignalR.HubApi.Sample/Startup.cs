@@ -18,7 +18,7 @@ namespace SignalR.HubApi.Sample
                 doc.ApiInfo = new HubApiInfo
                 {
                     Title = "Chat",
-                    Description = "Sample chap api",
+                    Description = "Sample chat api",
                     Version = "v1.0",
                     Contact = new HubApiContact
                     {

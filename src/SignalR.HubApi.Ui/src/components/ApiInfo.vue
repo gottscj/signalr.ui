@@ -46,12 +46,12 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 #ApiInfo {
   margin-bottom: 30px;
 
   .api-title {
-    color: var(--primary);
+    color: var(--primary-text);
     font-size: 36px;
     font-weight: bold;
 
@@ -80,10 +80,11 @@ export default {
     font-weight: 300 !important;
     margin: 0;
     font-weight: 600;
-    color: var(--primary);
+    color: var(--primary-text);
   }
 
   .api-description {
+    color: var(--primary-text);
     margin: 10px;
     font-size: 15px;
   }
