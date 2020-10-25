@@ -1,5 +1,6 @@
 <template>
   <BModal
+    content-class="add-server-modal"
     ref="modal"
     title="Add a server to your local configuration"
     @show="resetForm"
@@ -174,4 +175,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+::v-deep .add-server-modal {
+  background: var(--background);
+  color: var(--primary-text);
+}
+
+input {
+  color: var(--primary-text);
+  background-color: var(--background);
+  border-color: var(--primary-border);
+}
+
+input:focus {
+  color: var(--primary-text);
+  background-color: var(--navbar-background);
+  border-color: var(--primary-border);
+}
+</style>
